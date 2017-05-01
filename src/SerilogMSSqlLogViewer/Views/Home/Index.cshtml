@@ -1,0 +1,99 @@
+@model IList<string>
+@{
+    ViewData["Title"] = "Log";
+}
+
+<div class="row m-top-20">
+    <div class="col-md-10">
+        <table id="logTable" class="table table-hover">
+            <thead>
+                <tr>
+                    <th style="width: 30px">Id</th>
+                    <th>Message</th>
+                    <th style="width: 90px">Level</th>
+                    <th style="width: 170px">Timestamp</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-primary" onclick="LoadLogs()">Refresh</button>
+        <div>
+            <h4>Filter</h4>
+            <div id="predefinedFilter">
+                <div class="form-group">
+                    <label for="filter1Key">Property</label>
+                    <select id="filter1Key" class="form-control"></select>
+                </div>
+                <div class="form-group">
+                    <label for="filter1Value">Value</label>
+                    <input type="text" class="form-control" id="filter1Value">
+                </div>
+            </div>
+            <button class="btn btn-default" onclick="filterAndShowLogs()">Apply Filter</button>
+        </div>
+    </div>
+</div>
+
+<div id="logModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+    </div>
+</div>
+
+<script type="text/javascript">
+    var predefinedFilterProperties = JSON.parse('@Html.Raw(Json.Serialize(Model))');
+</script>
+
+<script id="logRowTmpl" type="text/x-jsrender">
+    {{for logs}}
+    <tr data-logId="{{:id}}">
+        <td scope="row" style="width: 30px">{{:id}}</td>
+        <td>{{:message}}</td>
+        <td style="width: 90px">
+            {{include tmpl="#logLevelTmpl"/}}
+        </td>
+        <td style="width: 170px">{{:timestamp}}</td>
+    </tr>
+    {{/for}}
+</script>
+
+<script id="logModalTmpl" type="text/x-jsrender">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Log Entry <strong>#{{:id}}</strong></h4>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Level</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">{{include tmpl="#logLevelTmpl"/}}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Timestamp</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">{{:timestamp}}</p>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+</script>
+
+<script id="logLevelTmpl" type="text/x-jsrender">
+    {{if level == 'Error'}}
+    <span class="label label-danger">Error</span>
+    {{else level == 'Fatal'}}
+    <span class="label label-danger">Fatal</span>
+    {{else level == 'Warning'}}
+    <span class="label label-warning">Warning</span>
+    {{else}}
+    <span class="label label-info">{{:level}}</span>
+    {{/if}}
+</script>
