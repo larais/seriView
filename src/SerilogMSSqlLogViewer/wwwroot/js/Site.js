@@ -12,15 +12,22 @@ function initializeFilters() {
         return;
     }
 
-    var f1 = $("#filter1Key");
+    var filterSelect = $("#predefinedProperty");
 
     for (var i = 0; i < predefinedFilterProperties.length; i++) {
-        f1.append("<option>" + predefinedFilterProperties[i] + "</option>");
+        filterSelect.append("<option>" + predefinedFilterProperties[i] + "</option>");
     }
 }
 
 function LoadLogs() {
-    $.getJSON("/Log/")
+    var level = $("#logLevelFilter").val();
+
+    if (level.length === $("#logLevelFilter option").length) {
+        level = [];
+    }
+
+
+    $.getJSON("/Log/", $.param({ level: level },true))
         .fail(function () {
             console.error("Error loading log.");
         })
@@ -61,13 +68,23 @@ function filterAndShowLogs() {
 function filterLogs(logs) {
     var filteredLogs = [];
 
-    var f1Key = $("#filter1Key").val();
-    var f1Value = $("#filter1Value").val();
+    var pFilterKey = $("#predefinedProperty").val();
+    var pFilterVal = $("#pFilterValue").val();
+
+    var filterKey = $("#filterKey").val();
+    var filterVal = $("#filterValue").val();
 
     for (let i = 0; i < logs.length; i++) {
-        if (f1Value !== null && f1Value.length > 0) {
+        if (pFilterVal !== null && pFilterVal.length > 0) {
 
-            if ($(logs[i].properties).find("property[key='" + f1Key + "']").text() !== f1Value) {
+            if ($(logs[i].properties).find("property[key='" + pFilterKey + "']").text() !== pFilterVal) {
+                continue;
+            }
+        }
+
+        if (filterVal !== null && filterVal.length > 0) {
+
+            if ($(logs[i].properties).find("property[key='" + filterKey + "']").text() !== filterVal) {
                 continue;
             }
         }

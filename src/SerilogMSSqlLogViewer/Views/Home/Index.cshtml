@@ -18,17 +18,39 @@
         </table>
     </div>
     <div class="col-md-2">
-        <button class="btn btn-primary" onclick="LoadLogs()">Refresh</button>
+        <button class="btn btn-block btn-primary" onclick="LoadLogs()">Refresh</button>
         <div>
             <h4>Filter</h4>
+            <div class="form-inline">
+                <select id="logLevelFilter" class="form-control" multiple>
+                    <option selected>Verbose</option>
+                    <option selected>Debug</option>
+                    <option selected>Information</option>
+                    <option selected>Warning</option>
+                    <option selected>Error</option>
+                    <option selected>Fatal</option>
+                </select>
+            </div>
+            <hr />
             <div id="predefinedFilter">
                 <div class="form-group">
-                    <label for="filter1Key">Property</label>
-                    <select id="filter1Key" class="form-control"></select>
+                    <label for="predefinedProperty">Property</label>
+                    <select id="predefinedProperty" class="form-control"></select>
                 </div>
                 <div class="form-group">
-                    <label for="filter1Value">Value</label>
-                    <input type="text" class="form-control" id="filter1Value">
+                    <label for="pFilterValue">Value</label>
+                    <input type="text" class="form-control" id="pFilterValue">
+                </div>
+            </div>
+            <hr />
+            <div>
+                <div class="form-group">
+                    <label for="filterKey">Property</label>
+                    <input type="text" class="form-control" id="filterKey">
+                </div>
+                <div class="form-group">
+                    <label for="filterValue">Value</label>
+                    <input type="text" class="form-control" id="filterValue">
                 </div>
             </div>
             <button class="btn btn-default" onclick="filterAndShowLogs()">Apply Filter</button>
