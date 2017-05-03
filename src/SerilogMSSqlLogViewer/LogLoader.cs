@@ -30,7 +30,7 @@ namespace SerilogMSSqlLogViewer
                 {
                     cmd.Parameters.AddWithValue("@top", top);
 
-                    if (filterLevels) cmd.AddArrayParameters("@levels", logLevels);
+                    if (filterLevels) cmd.AddArrayParameters("levels", logLevels);
 
                     using (var reader = await cmd.ExecuteReaderAsync())
                     {
@@ -58,7 +58,7 @@ namespace SerilogMSSqlLogViewer
 
             if (filterLevels)
             {
-                query += "AND Level IN (@levels)";
+                query += "WHERE Level IN ({levels}) ";
             }
 
             query += "ORDER BY TimeStamp DESC";

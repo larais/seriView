@@ -6,17 +6,34 @@ $(document).ready(function () {
     LoadLogs();
 });
 
+var isTop = false;
+
+$(document).scroll(function (event) {
+    if ($(document).scrollTop() > 50) {
+        if (!isTop) {
+            isTop = true;
+            $("#filterColumn").fadeIn().css({ top: 40 }).animate({ top: 0 }, 50);
+        }
+    } else {
+        $("#filterColumn").css("top", "");
+        isTop = false;
+    }
+});
+
 function initializeFilters() {
+    $(".ui.dropdown").dropdown();
+
     if (predefinedFilterProperties.length === 0) {
         $("#predefinedFilter").hide();
-        return;
+    } else {
+        var filterSelect = $("#predefinedProperty");
+
+        for (var i = 0; i < predefinedFilterProperties.length; i++) {
+            filterSelect.append("<option>" + predefinedFilterProperties[i] + "</option>");
+        }
     }
 
-    var filterSelect = $("#predefinedProperty");
-
-    for (var i = 0; i < predefinedFilterProperties.length; i++) {
-        filterSelect.append("<option>" + predefinedFilterProperties[i] + "</option>");
-    }
+    $("#filters").show();
 }
 
 function LoadLogs() {
@@ -29,12 +46,12 @@ function LoadLogs() {
 
     $.getJSON("/Log/", $.param({ level: level },true))
         .fail(function (jqXHR, textStatus, errorThrown) {
-            $("#errorView .content").text(jqXHR.status + " " + jqXHR.statusText);
-            $("#errorView").removeClass("hidden");
-            console.error(jqXHR);
+            $("#errorMessage .content").text(jqXHR.status + " " + jqXHR.statusText);
+            $("#errorMessage").show();
+            console.error(JSON.stringify(jqXHR));
         })
         .done(function (result) {
-            $("#errorView").addClass("hidden");
+            $("#errorMessage").hide();
             logs = result;
             filterAndShowLogs();
         });
@@ -63,8 +80,9 @@ function filterAndShowLogs() {
 
         var logModalTmpl = $.templates("#logModalTmpl");
         var logModalContent = logModalTmpl.render(logEntry);
-        $("#logModal .modal-dialog").html(logModalContent);
-        $("#logModal").modal("show");
+        $("#logModal .header").text("Log entry #" + logId);
+        $("#logModal .content").html(logModalContent);
+        showHideLogDetailModal(true);
     });
 }
 
@@ -96,4 +114,12 @@ function filterLogs(logs) {
     }
 
     return filteredLogs;
+}
+
+function showHideLogDetailModal(show) {
+    if (show) {
+        $("#logModal").modal("show");
+    } else {
+        $("#logModal").modal("hide");
+    }
 }

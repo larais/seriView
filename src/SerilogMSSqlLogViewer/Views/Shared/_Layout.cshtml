@@ -6,54 +6,50 @@
     <title>@ViewData["Title"] - WebLogViewer</title>
 
     <environment names="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/lib/semantic/dist/semantic.css" />
         <link rel="stylesheet" href="~/css/site.css" />
-    </environment>
-    <environment names="Staging,Production">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="~/css/site.min.css" />
-    </environment>
-</head>
-<body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">LogViewer</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Logs</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <div class="container-fluid body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2017 s- Serilog Microsoft SQL Server Log Viewer</p>
-        </footer>
-    </div>
 
-    <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/lib/semantic/dist/semantic.js"></script>
         <script src="~/lib/jsrender/jsrender.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment names="Staging,Production">
+        <link rel="stylesheet" href="~/lib/semantic/dist/semantic.min.css" />
+        <link rel="stylesheet" href="~/css/site.min.css" />
+
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="~/lib/semantic/dist/semantic.min.js"></script>
         <script src="~/lib/jsrender/jsrender.min.js"></script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 
     @RenderSection("Scripts", required: false)
+</head>
+<body>
+    <div class="body-main">
+        <div class="ui inverted menu">
+            <div class="ui container">
+                <a href="#" class="header item">
+                    Log Viewer
+                </a>
+            </div>
+        </div>
+
+        <div class="body-content ui main text">
+            @RenderBody()
+        </div>
+    </div>
+
+    <div class="body-footer">
+        <div class="ui inverted vertical footer segment">
+            <div class="ui center aligned container">
+                <div class="ui horizontal inverted small divided link list">
+                    <a class="item" href="https://github.com/SebastianLng/SerilogMSSqlLogViewer">GitHub Project</a>
+                    <a class="item" href="https://github.com/SebastianLng/">by Sebastian Lang</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

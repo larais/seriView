@@ -1,6 +1,7 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿.body-main {
+    min-height: 100%;
+    padding-bottom: 50px;
+    box-sizing: border-box;
 }
 
 .body-content {
@@ -8,14 +9,27 @@
     padding-right: 40px;
 }
 
-input,
-select,
-textarea {
-    max-width: 280px;
+.body-footer {
+    position: absolute;
+    margin-top: -48px;
+    left: 0;
+    width: 100%;
 }
 
-.m-top-20 {
-    margin-top: 20px;
+.menu {
+    border-radius: 0 !important;
+}
+
+#errorMessage {
+    display: none;
+}
+
+#filterColumn {
+    position: fixed;
+}
+
+#filters {
+    display: none;
 }
 
 #logTable {
@@ -25,3 +39,8 @@ textarea {
 tr {
     cursor: pointer;
 }
+
+/*.stickyColumn {
+    position: fixed;
+    top: 0px;
+}*/

@@ -3,10 +3,10 @@
     ViewData["Title"] = "Log";
 }
 
-<div id="errorView" class="alert alert-danger hidden" role="alert"> <strong>Error!</strong> <span class="content">some great message</span></div>
-<div class="row m-top-20">
-    <div class="col-md-10">
-        <table id="logTable" class="table table-hover">
+<div id="errorMessage" class="ui error message" role="alert"><div class="header">Error</div><p class="content">some great message</p></div>
+<div class="ui grid">
+    <div class="thirteen wide column">
+        <table id="logTable" class="ui selectable striped table">
             <thead>
                 <tr>
                     <th style="width: 30px">Id</th>
@@ -16,51 +16,69 @@
                 </tr>
             </thead>
             <tbody></tbody>
+            <tfoot></tfoot>
         </table>
     </div>
-    <div class="col-md-2">
-        <button class="btn btn-block btn-primary" onclick="LoadLogs()">Refresh</button>
-        <div>
-            <h4>Filter</h4>
-            <div class="form-inline">
-                <select id="logLevelFilter" class="form-control" multiple>
-                    <option selected>Verbose</option>
-                    <option selected>Debug</option>
-                    <option selected>Information</option>
-                    <option selected>Warning</option>
-                    <option selected>Error</option>
-                    <option selected>Fatal</option>
-                </select>
+    <div class="three wide column" id="filterColumn">
+        <button class="ui fluid primary button" onclick="LoadLogs()">Refresh</button>
+        <div class="ui divider"></div>
+        <div id="filters">
+            <h3>Filter</h3>
+            <div class="ui form">
+                <div class="field">
+                    <label for="logLevelFilter">Log level</label>
+                    <select id="logLevelFilter" class="ui dropdown" multiple="">
+                        <option selected>Verbose</option>
+                        <option selected>Debug</option>
+                        <option selected>Information</option>
+                        <option selected>Warning</option>
+                        <option selected>Error</option>
+                        <option selected>Fatal</option>
+                    </select>
+                </div>
             </div>
-            <hr />
+            <div class="ui divider"></div>
             <div id="predefinedFilter">
-                <div class="form-group">
-                    <label for="predefinedProperty">Property</label>
-                    <select id="predefinedProperty" class="form-control"></select>
-                </div>
-                <div class="form-group">
-                    <label for="pFilterValue">Value</label>
-                    <input type="text" class="form-control" id="pFilterValue">
-                </div>
-            </div>
-            <hr />
-            <div>
-                <div class="form-group">
-                    <label for="filterKey">Property</label>
-                    <input type="text" class="form-control" id="filterKey">
-                </div>
-                <div class="form-group">
-                    <label for="filterValue">Value</label>
-                    <input type="text" class="form-control" id="filterValue">
+                <div class="ui form">
+                    <div class="field">
+                        <label for="predefinedProperty">Property</label>
+                        <select id="predefinedProperty" placeholder="Property" type="text" class="ui dropdown"></select>
+                    </div>
+                    <div class="field">
+                        <label for="pFilterValue">Value</label>
+                        <input id="pFilterValue" placeholder="Value" type="text">
+                    </div>
                 </div>
             </div>
-            <button class="btn btn-default" onclick="filterAndShowLogs()">Apply Filter</button>
+            <div class="ui divider"></div>
+            <div class="ui form">
+                <div class="fields">
+                    <div class="field">
+                        <label for="filterKey">Property</label>
+                        <input id="filterKey" placeholder="Property" type="text">
+                    </div>
+                    <div class="field">
+                        <label for="filterValue">Value</label>
+                        <input id="filterValue" placeholder="Value" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="ui divider"></div>
+            <button class="fluid ui button" onclick="filterAndShowLogs()">Apply Filter</button>
         </div>
     </div>
 </div>
 
-<div id="logModal" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
+<div id="logModal" class="ui modal small">
+    <i class="close icon"></i>
+    <div class="header">
+        Log Entry
+    </div>
+    <div class="content">
+        
+    </div>
+    <div class="actions">
+        <div class="ui right button" onclick="showHideLogDetailModal(false)">Close</div>
     </div>
 </div>
 
@@ -82,41 +100,30 @@
 </script>
 
 <script id="logModalTmpl" type="text/x-jsrender">
-    <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">Log Entry <strong>#{{:id}}</strong></h4>
+    <div class="ui form">
+        <div class="inline fields">
+            <label style="width:100px">Level</label>
+            <div class="field">
+                <p>{{include tmpl="#logLevelTmpl"/}}</p>
+            </div>
         </div>
-        <div class="modal-body">
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">Level</label>
-                    <div class="col-sm-10">
-                        <p class="form-control-static">{{include tmpl="#logLevelTmpl"/}}</p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">Timestamp</label>
-                    <div class="col-sm-10">
-                        <p class="form-control-static">{{:timestamp}}</p>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <div class="inline fields">
+            <label style="width:100px">Timestamp</label>
+            <div class="field">
+                <p>{{:timestamp}}</p>
+            </div>
         </div>
     </div>
 </script>
 
 <script id="logLevelTmpl" type="text/x-jsrender">
     {{if level == 'Error'}}
-    <span class="label label-danger">Error</span>
+    <span class="ui orange horizontal label">Error</span>
     {{else level == 'Fatal'}}
-    <span class="label label-danger">Fatal</span>
+    <span class="ui red horizontal label">Fatal</span>
     {{else level == 'Warning'}}
-    <span class="label label-warning">Warning</span>
+    <span class="ui yellow horizontal label">Warning</span>
     {{else}}
-    <span class="label label-info">{{:level}}</span>
+    <span class="ui blue horizontal label">{{:level}}</span>
     {{/if}}
 </script>
