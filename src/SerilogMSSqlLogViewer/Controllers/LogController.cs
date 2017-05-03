@@ -21,7 +21,7 @@ namespace SerilogMSSqlLogViewer.Controllers
         public async Task<IList<LogEntry>> Get(List<string> level, int topEntriesCount = 100)
         {
             var logLoader = new LogLoader(config);
-            var log = await logLoader.GetLogEntries(topEntriesCount);
+            var log = await logLoader.GetLogEntries(topEntriesCount, level);
             return log;
         }
     }

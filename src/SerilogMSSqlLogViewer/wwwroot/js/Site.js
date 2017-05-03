@@ -28,10 +28,13 @@ function LoadLogs() {
 
 
     $.getJSON("/Log/", $.param({ level: level },true))
-        .fail(function () {
-            console.error("Error loading log.");
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            $("#errorView .content").text(jqXHR.status + " " + jqXHR.statusText);
+            $("#errorView").removeClass("hidden");
+            console.error(jqXHR);
         })
         .done(function (result) {
+            $("#errorView").addClass("hidden");
             logs = result;
             filterAndShowLogs();
         });

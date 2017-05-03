@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
+using SerilogMSSqlLogViewer.Utils;
 
 namespace SerilogMSSqlLogViewer
 {
@@ -14,17 +15,22 @@ namespace SerilogMSSqlLogViewer
             this.config = config;
         }
 
-        public async Task<IList<LogEntry>> GetLogEntries(int top)
+        public async Task<IList<LogEntry>> GetLogEntries(int top, List<string> logLevels)
         {
+            var filterLevels = logLevels.Count > 0;
+
             List<LogEntry> entries = new List<LogEntry>(100);
             using (SqlConnection connection = new SqlConnection(config.ConnectionString))
             {
                 await connection.OpenAsync();
 
-                using (SqlCommand cmd = new SqlCommand($"SELECT TOP (@top) * FROM {config.LogTable} ORDER BY TimeStamp DESC", connection))
-                {
+                var query = BuildQuery(filterLevels);
 
+                using (SqlCommand cmd = new SqlCommand(query, connection))
+                {
                     cmd.Parameters.AddWithValue("@top", top);
+
+                    if (filterLevels) cmd.AddArrayParameters("@levels", logLevels);
 
                     using (var reader = await cmd.ExecuteReaderAsync())
                     {
@@ -44,6 +50,20 @@ namespace SerilogMSSqlLogViewer
             }
 
             return entries;
+        }
+
+        private string BuildQuery(bool filterLevels)
+        {
+            var query = $"SELECT TOP (@top) * FROM {config.LogTable} ";
+
+            if (filterLevels)
+            {
+                query += "AND Level IN (@levels)";
+            }
+
+            query += "ORDER BY TimeStamp DESC";
+
+            return query;
         }
     }
 }
