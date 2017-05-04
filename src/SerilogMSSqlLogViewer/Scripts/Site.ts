@@ -1,10 +1,9 @@
 ﻿/// <reference path="../typings/index.d.ts" />
 
-//TODO: Refactor this
-declare var predefinedFilterProperties: any;
+declare var predefinedFilterProperties: string[];
 
-var logs: any[] = [];
-var logsFiltered: any[] = [];
+var logs: LogEntry[] = [];
+var logsFiltered: LogEntry[] = [];
 
 $(document).ready(function () {
     initializeFilters();
@@ -13,7 +12,7 @@ $(document).ready(function () {
 
 var isTop = false;
 
-$(document).scroll(function (event) {
+$(document).scroll((event) => {
     if ($(document).scrollTop() > 50) {
         if (!isTop) {
             isTop = true;
@@ -42,19 +41,19 @@ function initializeFilters() {
 }
 
 function LoadLogs() {
-    var level = $("#logLevelFilter").val();
+    var level: string[] = $("#logLevelFilter").val();
 
     if (level.length === $("#logLevelFilter option").length) {
         level = [];
     }
 
     $.getJSON("/Log/", $.param({ level: level },true))
-        .fail(function (jqXHR, textStatus, errorThrown) {
+        .fail((jqXHR, textStatus, errorThrown) => {
             $("#errorMessage .content").text(jqXHR.status + " " + jqXHR.statusText);
             $("#errorMessage").show();
             console.error(JSON.stringify(jqXHR));
         })
-        .done(function (result) {
+        .done((result: LogEntry[]) => {
             $("#errorMessage").hide();
             logs = result;
             filterAndShowLogs();
@@ -74,7 +73,7 @@ function filterAndShowLogs() {
             return;
         }
 
-        var logEntry = logsFiltered.filter(function (log) {
+        var logEntry = logsFiltered.filter((log) => {
             return log.id === logId;
         })[0];
 
@@ -90,8 +89,8 @@ function filterAndShowLogs() {
     });
 }
 
-function filterLogs(logs: any[]) {
-    var filteredLogs: any[] = [];
+function filterLogs(logs: LogEntry[]) {
+    var filteredLogs: LogEntry[] = [];
 
     var pFilterKey = $("#predefinedProperty").val();
     var pFilterVal = $("#pFilterValue").val();
@@ -126,4 +125,12 @@ function showHideLogDetailModal(show: boolean) {
     } else {
         $("#logModal").modal("hide");
     }
+}
+
+interface LogEntry {
+    id: number;
+    message: string;
+    level: string;
+    timestamp: string;
+    properties: string;
 }

@@ -1,16 +1,18 @@
-﻿/// <binding BeforeBuild='default' ProjectOpened='copy-libs:release, copy-libs:dev' />
+﻿/// <binding BeforeBuild='compile-ts:dev' ProjectOpened='watch, compile-ts:dev, copy-libs:release, copy-libs:dev' />
 
 var gulp = require('gulp'),
     ts = require("gulp-typescript"),
     gulpTypings = require("gulp-typings"),
+    sourcemaps = require('gulp-sourcemaps'),
     rimraf = require("rimraf");
 
 var paths = {
     webroot: "./wwwroot/",
-    bowerroot: "./bower_components/"
+    bowerroot: "./bower_components/",
+    ts: "./Scripts/**/*.ts",
 };
 
-gulp.task('clean', function () {
+gulp.task("clean", function () {
     return gulp.src('./wwwroot/**/*.js', { read: false })
         .pipe(rimraf());
 });
@@ -21,13 +23,28 @@ gulp.task("installTypings", function () {
     return stream;
 });
 
-gulp.task('compile-ts', function () {
-    gulp.src('./TypeScript/**/*.ts')
+gulp.task("compile-ts:dev", function () {
+    var tsResult = gulp.src(paths.ts)
+        .pipe(sourcemaps.init())
         .pipe(ts({
-            noImplicitAny: true,
-            out: 'site.js'
+            noImplicitAny: true
+        }));
+
+    return tsResult.js
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest(paths.webroot + "js"));
+});
+
+gulp.task("compile-ts:release", function () {
+    return gulp.src(paths.ts)
+        .pipe(ts({
+            noImplicitAny: true
         }))
-        .pipe(gulp.dest('./wwwroot/js'));
+        .pipe(gulp.dest(paths.webroot + "js"));
+});
+
+gulp.task("watch", function () {
+    gulp.watch([paths.ts], ["compile-ts"]);
 });
 
 gulp.task("copy-semantic-ui", function () {
@@ -53,4 +70,4 @@ gulp.task('copy-libs:dev', ["copy-semantic-ui"], function () {
         .pipe(gulp.dest("./wwwroot/lib"));
 });
 
-gulp.task('default', ['compile-ts']);
+gulp.task("release", ["compile-ts:release", "copy-libs:release"]);
