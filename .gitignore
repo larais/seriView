@@ -253,4 +253,5 @@ paket-files/
 
 /src/SerilogMSSqlLogViewer/bower_components
 /src/SerilogMSSqlLogViewer/wwwroot/js/
+/src/SerilogMSSqlLogViewer/wwwroot/css/
 /src/SerilogMSSqlLogViewer/wwwroot/lib/
