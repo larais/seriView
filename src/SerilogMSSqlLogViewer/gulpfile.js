@@ -1,17 +1,24 @@
-﻿/// <binding BeforeBuild='default' ProjectOpened='copy-libs:release, copy-libs:dev' />
+﻿/// <binding BeforeBuild='default' Clean='clean' ProjectOpened='copy-libs:release, copy-libs:dev' />
 
 var gulp = require('gulp'),
+    sass = require("gulp-sass");
     ts = require("gulp-typescript"),
     gulpTypings = require("gulp-typings"),
-    rimraf = require("rimraf");
+    rimraf = require("gulp-rimraf");
 
 var paths = {
     webroot: "./wwwroot/",
     bowerroot: "./bower_components/"
 };
+gulp.task('clean', ['clean:js', 'clean:css']);
 
-gulp.task('clean', function () {
+gulp.task('clean:js', function () {
     return gulp.src('./wwwroot/**/*.js', { read: false })
+        .pipe(rimraf());
+});
+
+gulp.task('clean:css', function () {
+    return gulp.src('wwwroot/css/**/*.css', { read: false })
         .pipe(rimraf());
 });
 
@@ -21,13 +28,21 @@ gulp.task("installTypings", function () {
     return stream;
 });
 
-gulp.task('compile-ts', function () {
+gulp.task('compile', ['compile:ts', 'compile:scss']);
+
+gulp.task('compile:ts', function () {
     gulp.src('./TypeScript/**/*.ts')
         .pipe(ts({
             noImplicitAny: true,
             out: 'site.js'
         }))
         .pipe(gulp.dest('./wwwroot/js'));
+});
+
+gulp.task('compile:scss', function () {
+    return gulp.src('Styles/**/*.scss')
+        .pipe(sass())
+        .pipe(gulp.dest('./wwwroot/css'));
 });
 
 gulp.task("copy-semantic-ui", function () {
@@ -53,4 +68,4 @@ gulp.task('copy-libs:dev', ["copy-semantic-ui"], function () {
         .pipe(gulp.dest("./wwwroot/lib"));
 });
 
-gulp.task('default', ['compile-ts']);
+gulp.task('default', ['clean','compile']);

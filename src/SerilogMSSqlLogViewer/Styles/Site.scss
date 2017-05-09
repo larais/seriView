@@ -1,0 +1,46 @@
+﻿.body-main {
+    min-height: 100%;
+    padding-bottom: 50px;
+    box-sizing: border-box;
+}
+
+.body-content {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.body-footer {
+    position: absolute;
+    margin-top: -48px;
+    left: 0;
+    width: 100%;
+}
+
+.menu {
+    border-radius: 0 !important;
+}
+
+#errorMessage {
+    display: none;
+}
+
+#filterColumn {
+    position: fixed;
+}
+
+#filters {
+    display: none;
+}
+
+#logTable {
+    font-size: 0.9em;
+}
+
+tr {
+    cursor: pointer;
+}
+
+/*.stickyColumn {
+    position: fixed;
+    top: 0px;
+}*/
