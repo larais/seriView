@@ -1,19 +1,35 @@
-﻿/// <binding BeforeBuild='compile-ts:dev' ProjectOpened='watch, compile-ts:dev, copy-libs:release, copy-libs:dev' />
+﻿/// <binding BeforeBuild='compile-ts:dev, compile-sass:dev' Clean='clean' ProjectOpened='watch, compile-ts:dev, compile-sass:dev, copy-libs:release, copy-libs:dev' />
 
 var gulp = require('gulp'),
     ts = require("gulp-typescript"),
+    sass = require("gulp-sass"),
+    rename = require('gulp-rename'),
     gulpTypings = require("gulp-typings"),
     sourcemaps = require('gulp-sourcemaps'),
-    rimraf = require("rimraf");
+    rimraf = require("gulp-rimraf"),
+    plumber = require('gulp-plumber');
 
 var paths = {
     webroot: "./wwwroot/",
     bowerroot: "./bower_components/",
     ts: "./Scripts/**/*.ts",
+    scss: "./Styles/**/*.scss"
 };
 
-gulp.task("clean", function () {
+var errorHandler = function (error) {
+    console.log(error);
+    this.emit('end');
+}
+
+gulp.task('clean', ['clean:js', 'clean:css']);
+
+gulp.task("clean:js", function () {
     return gulp.src('./wwwroot/**/*.js', { read: false })
+        .pipe(rimraf());
+});
+
+gulp.task("clean:css", function () {
+    return gulp.src('./wwwroot/**/*.css', { read: false })
         .pipe(rimraf());
 });
 
@@ -43,8 +59,31 @@ gulp.task("compile-ts:release", function () {
         .pipe(gulp.dest(paths.webroot + "js"));
 });
 
-gulp.task("watch", function () {
+gulp.task("compile-sass:dev", function () {
+    return gulp.src(paths.scss)
+        .pipe(plumber(errorHandler))
+        .pipe(sass({ outputStyle: 'expanded' }))
+        .pipe(gulp.dest(paths.webroot + 'css'));
+});
+
+gulp.task("compile-sass:release", function () {
+    return gulp.src(paths.scss)
+        .pipe(plumber(errorHandler))
+        .pipe(sass({ outputStyle: 'compressed' }))
+        .pipe(rename({
+            suffix: '.min'
+        }))
+        .pipe(gulp.dest(paths.webroot + 'css'));
+});
+
+gulp.task('watch', ['watch:ts', 'watch:sass']);
+
+gulp.task("watch:ts", function () {
     gulp.watch([paths.ts], ["compile-ts"]);
+});
+
+gulp.task("watch:sass", function () {
+    gulp.watch([paths.scss], ["compile-sass:dev"]);
 });
 
 gulp.task("copy-semantic-ui", function () {
@@ -70,4 +109,4 @@ gulp.task('copy-libs:dev', ["copy-semantic-ui"], function () {
         .pipe(gulp.dest("./wwwroot/lib"));
 });
 
-gulp.task("release", ["compile-ts:release", "copy-libs:release"]);
+gulp.task("release", ["compile-ts:release", "compile-sass:release", "copy-libs:release"]);
