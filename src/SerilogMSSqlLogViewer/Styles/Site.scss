@@ -26,6 +26,7 @@
 
 #filterColumn {
     position: fixed;
+    right: 0;
 }
 
 #filters {
@@ -39,8 +40,3 @@
 tr {
     cursor: pointer;
 }
-
-/*.stickyColumn {
-    position: fixed;
-    top: 0px;
-}*/
