@@ -79,7 +79,7 @@ gulp.task("compile-sass:release", function () {
 gulp.task('watch', ['watch:ts', 'watch:sass']);
 
 gulp.task("watch:ts", function () {
-    gulp.watch([paths.ts], ["compile-ts"]);
+    gulp.watch([paths.ts], ["compile-ts:dev"]);
 });
 
 gulp.task("watch:sass", function () {
