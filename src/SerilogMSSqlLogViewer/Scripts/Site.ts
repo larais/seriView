@@ -49,7 +49,7 @@ function LoadLogs() {
 
     $.getJSON("/Log/", $.param({ level: level },true))
         .fail((jqXHR, textStatus, errorThrown) => {
-            $("#errorMessage .content").text(jqXHR.status + " " + jqXHR.statusText);
+            $("#errorMessage .content").text(jqXHR.status + " " + jqXHR.responseText);
             $("#errorMessage").show();
             console.error(JSON.stringify(jqXHR));
         })

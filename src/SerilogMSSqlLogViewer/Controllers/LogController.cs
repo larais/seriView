@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace SerilogMSSqlLogViewer.Controllers
 {
+    //[ApiExceptionFilter]
     [Route("Log")]
     public class LogController : Controller
     {
-
         private readonly LogViewerConfig config;
 
         public LogController(IOptions<LogViewerConfig> config)

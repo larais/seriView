@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 using SerilogMSSqlLogViewer.Utils;
+using System;
 
 namespace SerilogMSSqlLogViewer
 {
@@ -13,12 +14,16 @@ namespace SerilogMSSqlLogViewer
         public LogLoader(LogViewerConfig config)
         {
             this.config = config;
+            if (string.IsNullOrEmpty(this.config.ConnectionString))
+            {
+                throw new InvalidOperationException("ConnectionString is empty. Please check your configuration.") { Source = "Log loader" };
+            }
         }
 
         public async Task<IList<LogEntry>> GetLogEntries(int top, List<string> logLevels)
         {
             var filterLevels = logLevels.Count > 0;
-
+            
             List<LogEntry> entries = new List<LogEntry>(100);
             using (SqlConnection connection = new SqlConnection(config.ConnectionString))
             {
