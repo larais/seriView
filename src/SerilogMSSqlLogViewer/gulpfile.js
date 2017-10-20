@@ -7,7 +7,10 @@ var gulp = require('gulp'),
     gulpTypings = require("gulp-typings"),
     sourcemaps = require('gulp-sourcemaps'),
     rimraf = require("gulp-rimraf"),
-    plumber = require('gulp-plumber');
+    plumber = require('gulp-plumber'),
+    rmLines = require("gulp-rm-lines");
+
+var tsProject = ts.createProject("tsconfig.json");
 
 var paths = {
     webroot: "./wwwroot/",
@@ -19,7 +22,7 @@ var paths = {
 var errorHandler = function (error) {
     console.log(error);
     this.emit('end');
-}
+};
 
 gulp.task('clean', ['clean:js', 'clean:css']);
 
@@ -40,14 +43,13 @@ gulp.task("installTypings", function () {
 });
 
 gulp.task("compile-ts:dev", function () {
-    var tsResult = gulp.src(paths.ts)
+    var tsResult = tsProject.src()
         .pipe(sourcemaps.init())
-        .pipe(ts({
-            noImplicitAny: true
-        }));
+        .pipe(tsProject());
 
     return tsResult.js
         .pipe(sourcemaps.write())
+        .pipe(rmLines({ "filters": ["import Vue from 'vue';"] }))
         .pipe(gulp.dest(paths.webroot + "js"));
 });
 

@@ -1,0 +1,9 @@
+﻿<script type="text/x-template" id="logEntryTmpl">
+    <tr v-on:click="showDetails">
+        <td scope="row" style="width: 30px">{{ entry.id }}</td>
+        <td>{{ entry.message }}</td>
+        <td style="width: 90px">
+        </td>
+        <td style="width: 170px">{{ timestampFormatted }}</td>
+    </tr>
+</script>
