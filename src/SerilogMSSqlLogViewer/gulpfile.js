@@ -49,7 +49,7 @@ gulp.task("compile-ts:dev", function () {
 
     return tsResult.js
         .pipe(sourcemaps.write())
-        .pipe(rmLines({ "filters": ["import Vue from 'vue';"] }))
+        .pipe(rmLines({ "filters": ["import Vue from 'vue'", "import axios from 'axios'"] }))
         .pipe(gulp.dest(paths.webroot + "js"));
 });
 

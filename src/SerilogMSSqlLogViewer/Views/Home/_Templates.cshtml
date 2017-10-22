@@ -1,8 +1,26 @@
-﻿<script type="text/x-template" id="logEntryTmpl">
+﻿<script type="text/x-template" id="logTableTmpl">
+    <table class="ui selectable striped table logTable">
+        <thead>
+            <tr>
+                <th style="width: 30px">Id</th>
+                <th>Message</th>
+                <th style="width: 90px">Level</th>
+                <th style="width: 230px">Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            <log-entry v-for="item in pr_logdata" :pr_entry="item" :key="item.id"></log-entry>
+        </tbody>
+        <tfoot></tfoot>
+    </table>
+</script>
+
+<script type="text/x-template" id="logEntryTmpl">
     <tr v-on:click="showDetails">
-        <td scope="row" style="width: 30px">{{ entry.id }}</td>
-        <td>{{ entry.message }}</td>
+        <td scope="row" style="width: 30px">{{ logEntry.id }}</td>
+        <td>{{ logEntry.message }}</td>
         <td style="width: 90px">
+            <span class="ui horizontal label" v-bind:class="levelClass">{{ logEntry.level }}</span>
         </td>
         <td style="width: 170px">{{ timestampFormatted }}</td>
     </tr>

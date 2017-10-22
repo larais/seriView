@@ -6,8 +6,8 @@ var logs: LogEntry[] = [];
 var logsFiltered: LogEntry[] = [];
 
 $(document).ready(function () {
-    initializeFilters();
-    LoadLogs();
+    //initializeFilters();
+    //LoadLogs();
 });
 
 var isTop = false;
