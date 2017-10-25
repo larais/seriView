@@ -257,3 +257,4 @@ paket-files/
 /src/SerilogMSSqlLogViewer/wwwroot/lib/
 /src/SerilogMSSqlLogViewer/Scripts/**/*.js
 /src/SerilogMSSqlLogViewer/Scripts/**/*.js.map
+.vscode
