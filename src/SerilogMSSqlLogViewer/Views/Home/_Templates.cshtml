@@ -50,6 +50,7 @@
             Log Entry #{{ logEntry.id }}
         </div>
         <div v-if="logEntry" class="content">
+            <h4>General</h4>
             <table class="ui very basic collapsing celled table">
                 <tbody>
                     <tr>
@@ -65,6 +66,15 @@
                     <tr>
                         <td>Timestamp</td>
                         <td>{{ logEntry.timestamp | timestampFormatted }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4 v-if="properties">Properties</h4>
+            <table v-if="properties" class="ui very basic collapsing celled table">
+                <tbody>
+                    <tr v-for="prop in properties">
+                        <td>{{ prop.key }}</td>
+                        <td><p>{{ prop.value }}</p></td>
                     </tr>
                 </tbody>
             </table>

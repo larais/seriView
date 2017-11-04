@@ -7,13 +7,26 @@ Vue.component("log-entry-modal", {
 
     data: function () {
         return {
-            logEntry: null
+            logEntry: null,
+            properties: []
         };
     },
     methods: {
         showModal: function (logEntry: LogEntry) {
             console.log("show modal");
             this.logEntry = logEntry;
+
+            var properties: LogProperty[] = [];
+
+            $(logEntry.properties).find("property").each(function (i, item) {
+                properties.push({
+                    key: $(item).attr("key"),
+                    value: $(item).text()
+                });
+            });
+
+            this.properties = properties;
+
             $(".entryModal").modal("show");
         },
 

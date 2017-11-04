@@ -48,7 +48,7 @@ gulp.task("compile-ts:dev", function () {
         .pipe(tsProject());
 
     return tsResult.js
-        .pipe(sourcemaps.write())
+        .pipe(sourcemaps.write("."))
         .pipe(rmLines({
             "filters": [/^import\s[\S +]+\sfrom\s(['"]\w+['"];$)/gm] }))
         .pipe(gulp.dest(paths.webroot + "js"));
