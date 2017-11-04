@@ -10,28 +10,36 @@ var app = new Vue({
         errorMessage: "",
         showModal: false,
         modalEntry: null,
+        isLoadingLogs: false,
         logdata: []
     },
 
     methods: {
         applyFilter: function (filter: string): void {
             console.log("apply filter '" + filter + "'");
+        },
+
+        loadLogs(filter: string = null): void {
+            this.isLoadingLogs = true;
+            $.getJSON("/Log")
+                .done((response: LogEntry[]) => {
+                    this.isErrorVisible = false;
+                    this.logdata = response;
+                    console.debug("loaded " + response.length + " items.");
+                    this.isLoadingLogs = false;
+                })
+                .fail((error) => {
+                    this.isErrorVisible = true;
+                    this.errorMessage = error.response.data;
+                    console.log(this);
+                    console.log(error);
+                    this.isLoadingLogs = false;
+                });
         }
     },
 
     mounted() {
-        $.getJSON("/Log")
-            .done((response: LogEntry[]) => {
-                this.isErrorVisible = false;
-                this.logdata = response;
-                console.debug("loaded " + response.length + " items.");
-            })
-            .fail((error) => {
-                this.isErrorVisible = true;
-                this.errorMessage = error.response.data;
-                console.log(this);
-                console.log(error);
-            });
+        this.loadLogs();
     }
 });
 
