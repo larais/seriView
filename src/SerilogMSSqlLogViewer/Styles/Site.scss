@@ -20,10 +20,6 @@
     border-radius: 0 !important;
 }
 
-#errorMessage {
-    display: none;
-}
-
 #filterColumn {
     position: fixed;
     right: 0;
@@ -33,10 +29,14 @@
     display: none;
 }
 
-#logTable {
+.logTable {
     font-size: 0.9em;
 }
 
 tr {
     cursor: pointer;
+}
+
+[v-cloak] {
+    display: none;
 }

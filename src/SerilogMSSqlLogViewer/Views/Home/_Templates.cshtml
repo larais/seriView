@@ -1,0 +1,96 @@
+﻿<script type="text/x-template" id="logTableTmpl">
+    <table class="ui selectable striped table logTable">
+        <thead>
+            <tr>
+                <th style="width: 30px">Id</th>
+                <th>Message</th>
+                <th style="width: 90px">Level</th>
+                <th style="width: 230px">Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            <log-entry v-for="item in pr_logdata" :pr_entry="item" :key="item.id"></log-entry>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="4">
+                    <div class="ui right floated pagination menu">
+                        <a class="icon item">
+                            <i class="left chevron icon"></i>
+                        </a>
+                        <a class="item">1</a>
+                        <a class="item">2</a>
+                        <a class="item">3</a>
+                        <a class="item">4</a>
+                        <a class="icon item">
+                            <i class="right chevron icon"></i>
+                        </a>
+                    </div>
+                </th>
+            </tr>
+        </tfoot>
+    </table>
+</script>
+
+<script type="text/x-template" id="logEntryTmpl">
+    <tr v-on:click="showDetails">
+        <td scope="row" style="width: 30px">{{ pr_entry.id }}</td>
+        <td>{{ pr_entry.message }}</td>
+        <td style="width: 90px">
+            <span class="ui horizontal label" v-bind:class="pr_entry.level | levelClass">{{ pr_entry.level }}</span>
+        </td>
+        <td style="width: 170px">{{ pr_entry.timestamp | timestampFormatted }}</td>
+    </tr>
+</script>
+
+<script type="text/x-template" id="logEntryModalTmpl">
+    <div class="ui modal small entryModal">
+        <i class="close icon"></i>
+        <div v-if="logEntry" class="header">
+            Log Entry #{{ logEntry.id }}
+        </div>
+        <div v-if="logEntry" class="content">
+            <h4>General</h4>
+            <table class="ui very basic collapsing celled table">
+                <tbody>
+                    <tr>
+                        <td>Message</td>
+                        <td><p>{{ logEntry.message }}</p></td>
+                    </tr>
+                    <tr>
+                        <td>Level</td>
+                        <td>
+                            <p><span class="ui horizontal label" v-bind:class="logEntry.level | levelClass">{{ logEntry.level }}</span></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Timestamp</td>
+                        <td>{{ logEntry.timestamp | timestampFormatted }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4 v-if="properties">Properties</h4>
+            <table v-if="properties" class="ui very basic collapsing celled table">
+                <tbody>
+                    <tr v-for="prop in properties">
+                        <td>{{ prop.key }}</td>
+                        <td><p>{{ prop.value }}</p></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="actions">
+            <div class="ui right button" v-on:click="hideModal">Close</div>
+        </div>
+    </div>
+</script>
+
+<script type="text/x-template" id="logFilterTmpl">
+    <div class="ui form">
+        <div class="field">
+            <label>Query</label>
+            <input v-model="filter">
+        </div>
+        <div class="ui submit button" v-on:click="evClickApply">Apply</div>
+    </div>
+</script>

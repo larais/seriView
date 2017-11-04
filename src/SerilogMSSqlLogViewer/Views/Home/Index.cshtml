@@ -3,127 +3,23 @@
     ViewData["Title"] = "Log";
 }
 
-<div class="ui grid">
-    <div class="thirteen wide column">
-        <div id="errorMessage" class="ui error message" role="alert"><div class="header">Error</div><p class="content"></p></div>
-        <table id="logTable" class="ui selectable striped table">
-            <thead>
-                <tr>
-                    <th style="width: 30px">Id</th>
-                    <th>Message</th>
-                    <th style="width: 90px">Level</th>
-                    <th style="width: 170px">Timestamp</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-            <tfoot></tfoot>
-        </table>
-    </div>
-    <div class="three wide column" id="filterColumn">
-        <button class="ui fluid primary button" onclick="LoadLogs()">Refresh</button>
-        <div class="ui divider"></div>
-        <div id="filters">
-            <h3>Filter</h3>
-            <div class="ui form">
-                <div class="field">
-                    <label for="logLevelFilter">Log level</label>
-                    <select id="logLevelFilter" class="ui dropdown" multiple="">
-                        <option selected>Verbose</option>
-                        <option selected>Debug</option>
-                        <option selected>Information</option>
-                        <option selected>Warning</option>
-                        <option selected>Error</option>
-                        <option selected>Fatal</option>
-                    </select>
-                </div>
-            </div>
-            <div class="ui divider"></div>
-            <div id="predefinedFilter">
-                <div class="ui form">
-                    <div class="field">
-                        <label for="predefinedProperty">Property</label>
-                        <select id="predefinedProperty" placeholder="Property" type="text" class="ui dropdown"></select>
-                    </div>
-                    <div class="field">
-                        <label for="pFilterValue">Value</label>
-                        <input id="pFilterValue" type="text">
-                    </div>
-                </div>
-            </div>
-            <div class="ui divider"></div>
-            <div class="ui form">
-                <div class="fields">
-                    <div class="field">
-                        <label for="filterKey">Property</label>
-                        <input id="filterKey" type="text">
-                    </div>
-                    <div class="field">
-                        <label for="filterValue">Value</label>
-                        <input id="filterValue" type="text">
-                    </div>
-                </div>
-            </div>
-            <div class="ui divider"></div>
-            <button class="fluid ui button" onclick="filterAndShowLogs()">Apply Filter</button>
-        </div>
-    </div>
+<div id="app">
+    <log-filter v-on:em_apply_filter="applyFilter"></log-filter>
+    <div v-cloak v-if="isErrorVisible" class="ui error message" role="alert"><div class="header">Error</div><p>{{ errorMessage }}</p></div>
+    <log-table :pr_logdata="logdata"></log-table>
+    <log-entry-modal></log-entry-modal>
 </div>
 
-<div id="logModal" class="ui modal small">
-    <i class="close icon"></i>
-    <div class="header">
-        Log Entry
-    </div>
-    <div class="content">
-        
-    </div>
-    <div class="actions">
-        <div class="ui right button" onclick="showHideLogDetailModal(false)">Close</div>
-    </div>
-</div>
 
 <script type="text/javascript">
     var predefinedFilterProperties = JSON.parse('@Html.Raw(Json.Serialize(Model))');
 </script>
 
-<script id="logRowTmpl" type="text/x-jsrender">
-    {{for logs}}
-    <tr data-logId="{{:id}}">
-        <td scope="row" style="width: 30px">{{:id}}</td>
-        <td>{{:message}}</td>
-        <td style="width: 90px">
-            {{include tmpl="#logLevelTmpl"/}}
-        </td>
-        <td style="width: 170px">{{:timestamp}}</td>
-    </tr>
-    {{/for}}
-</script>
+@Html.Partial("_Templates.cshtml")
 
-<script id="logModalTmpl" type="text/x-jsrender">
-    <div class="ui form">
-        <div class="inline fields">
-            <label style="width:100px">Level</label>
-            <div class="field">
-                <p>{{include tmpl="#logLevelTmpl"/}}</p>
-            </div>
-        </div>
-        <div class="inline fields">
-            <label style="width:100px">Timestamp</label>
-            <div class="field">
-                <p>{{:timestamp}}</p>
-            </div>
-        </div>
-    </div>
-</script>
+<script src="~/js/Components/LogTable.js"></script>
+<script src="~/js/Components/LogEntry.js"></script>
+<script src="~/js/Components/LogEntryModal.js"></script>
+<script src="~/js/Components/LogFilter.js"></script>
 
-<script id="logLevelTmpl" type="text/x-jsrender">
-    {{if level == 'Error'}}
-    <span class="ui orange horizontal label">Error</span>
-    {{else level == 'Fatal'}}
-    <span class="ui red horizontal label">Fatal</span>
-    {{else level == 'Warning'}}
-    <span class="ui yellow horizontal label">Warning</span>
-    {{else}}
-    <span class="ui blue horizontal label">{{:level}}</span>
-    {{/if}}
-</script>
+<script src="~/js/VueApp.js"></script>

@@ -1,4 +1,4 @@
-﻿/// <binding BeforeBuild='compile-ts:dev, compile-sass:dev' Clean='clean' ProjectOpened='watch, compile-ts:dev, compile-sass:dev, copy-libs:release, copy-libs:dev' />
+﻿/// <binding BeforeBuild='compile-ts:dev, compile-sass:dev' Clean='clean' ProjectOpened='watch, compile-ts:dev, compile-sass:dev, copy-libs:release, copy-libs:dev, watch:ts' />
 
 var gulp = require('gulp'),
     ts = require("gulp-typescript"),
@@ -7,11 +7,14 @@ var gulp = require('gulp'),
     gulpTypings = require("gulp-typings"),
     sourcemaps = require('gulp-sourcemaps'),
     rimraf = require("gulp-rimraf"),
-    plumber = require('gulp-plumber');
+    plumber = require('gulp-plumber'),
+    rmLines = require("gulp-rm-lines");
+
+var tsProject = ts.createProject("tsconfig.json");
 
 var paths = {
     webroot: "./wwwroot/",
-    bowerroot: "./bower_components/",
+    node_modules: "./node_modules/",
     ts: "./Scripts/**/*.ts",
     scss: "./Styles/**/*.scss"
 };
@@ -19,7 +22,7 @@ var paths = {
 var errorHandler = function (error) {
     console.log(error);
     this.emit('end');
-}
+};
 
 gulp.task('clean', ['clean:js', 'clean:css']);
 
@@ -40,14 +43,14 @@ gulp.task("installTypings", function () {
 });
 
 gulp.task("compile-ts:dev", function () {
-    var tsResult = gulp.src(paths.ts)
+    var tsResult = tsProject.src()
         .pipe(sourcemaps.init())
-        .pipe(ts({
-            noImplicitAny: true
-        }));
+        .pipe(tsProject());
 
     return tsResult.js
-        .pipe(sourcemaps.write())
+        .pipe(sourcemaps.write("."))
+        .pipe(rmLines({
+            "filters": [/^import\s[\S +]+\sfrom\s(['"]\w+['"];$)/gm] }))
         .pipe(gulp.dest(paths.webroot + "js"));
 });
 
@@ -86,25 +89,20 @@ gulp.task("watch:sass", function () {
     gulp.watch([paths.scss], ["compile-sass:dev"]);
 });
 
-gulp.task("copy-semantic-ui", function () {
+gulp.task('copy-libs:release', function () {
     return gulp.src([
-        paths.bowerroot + "semantic/dist/**/**"
-    ])
-        .pipe(gulp.dest("./wwwroot/lib/semantic"));
-});
-
-gulp.task('copy-libs:release', ["copy-semantic-ui"], function () {
-    return gulp.src([
-        paths.bowerroot + "jquery/dist/jquery.min.js",
-        paths.bowerroot + "jsrender/jsrender.min.js"
+        "semantic/dist/**/**",
+        paths.node_modules + "jquery/dist/jquery.min.js",
+        paths.node_modules + "vue/dist/vue.min.js"
     ])
         .pipe(gulp.dest("./wwwroot/lib"));
 });
 
-gulp.task('copy-libs:dev', ["copy-semantic-ui"], function () {
+gulp.task('copy-libs:dev', function () {
     return gulp.src([
-        paths.bowerroot + "jquery/dist/jquery.js",
-        paths.bowerroot + "jsrender/jsrender.js"
+        "semantic/dist/**/**",
+        paths.node_modules + "jquery/dist/jquery.js",
+        paths.node_modules + "vue/dist/vue.js"
     ])
         .pipe(gulp.dest("./wwwroot/lib"));
 });
