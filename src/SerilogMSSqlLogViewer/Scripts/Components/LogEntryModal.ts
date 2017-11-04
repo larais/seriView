@@ -1,32 +1,30 @@
 ﻿import Vue from 'vue'
 import $ from "jquery"
+declare var eventBus: Vue;
 
 Vue.component("log-entry-modal", {
     template: "#logEntryModalTmpl",
-    props: {
-        pr_entry: {
-            type: Object
-        },
-        pr_show: { type: Boolean, required: true }
-    },
 
     data: function () {
         return {
-            show: true
+            logEntry: null
         };
     },
     methods: {
-        showModal: function() {
-            this.show = true;
-            this.toggleModal();
+        showModal: function (logEntry: LogEntry) {
+            console.log("show modal");
+            this.logEntry = logEntry;
+            $(".entryModal").modal("show");
         },
 
-        toggleModal: function () {
-            if (this.show) {
-                $(".entryModal").modal("show");
-            } else {
-                $(".entryModal").modal("hide");
-            }
+        hideModal: function () {
+            console.log("hide modal");
+            $(".entryModal").modal("hide");
+            this.logEntry = null;
         }
+    },
+
+    mounted() {
+        eventBus.$on("evClickEntry", this.showModal);
     }
 });

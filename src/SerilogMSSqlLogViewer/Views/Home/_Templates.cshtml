@@ -46,27 +46,31 @@
 <script type="text/x-template" id="logEntryModalTmpl">
     <div class="ui modal small entryModal">
         <i class="close icon"></i>
-        <div class="header">
-            Log Entry
+        <div v-if="logEntry" class="header">
+            Log Entry #{{ logEntry.id }}
         </div>
-        <div class="content">
-            <div class="ui form">
-                <div class="inline fields">
-                    <label style="width:100px">Level</label>
-                    <div class="field">
-                        <p><span class="ui horizontal label" v-bind:class="pr_entry.level | levelClass">{{ pr_entry.level }}</span></p>
-                    </div>
-                </div>
-                <div class="inline fields">
-                    <label style="width:100px">Timestamp</label>
-                    <div class="field">
-                        <p>{{ pr_entry.timestamp | timestampFormatted }}</p>
-                    </div>
-                </div>
-            </div>
+        <div v-if="logEntry" class="content">
+            <table class="ui very basic collapsing celled table">
+                <tbody>
+                    <tr>
+                        <td>Message</td>
+                        <td><p>{{ logEntry.message }}</p></td>
+                    </tr>
+                    <tr>
+                        <td>Level</td>
+                        <td>
+                            <p><span class="ui horizontal label" v-bind:class="logEntry.level | levelClass">{{ logEntry.level }}</span></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Timestamp</td>
+                        <td>{{ logEntry.timestamp | timestampFormatted }}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         <div class="actions">
-            <div class="ui right button" onclick="showHideLogDetailModal(false)">Close</div>
+            <div class="ui right button" v-on:click="hideModal">Close</div>
         </div>
     </div>
 </script>

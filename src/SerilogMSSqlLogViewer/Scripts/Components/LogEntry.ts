@@ -1,4 +1,5 @@
 ﻿import Vue from 'vue'
+declare var eventBus: Vue;
 
 Vue.component("log-entry", {
     template: "#logEntryTmpl",
@@ -10,7 +11,7 @@ Vue.component("log-entry", {
     methods: {
         showDetails: function () {
             console.log("Show details of " + this.pr_entry.id);
-            this.$emit("evClickEntry", this.pr_entry);
+            eventBus.$emit("evClickEntry", this.pr_entry);
         }
     }
 });

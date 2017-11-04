@@ -1,6 +1,8 @@
 ﻿import Vue from 'vue'
 import $ from 'jquery'
 
+var eventBus = new Vue();
+
 var app = new Vue({
     el: "#app",
     data: {
@@ -9,13 +11,6 @@ var app = new Vue({
         showModal: false,
         modalEntry: null,
         logdata: []
-    },
-
-    methods: {
-        showEntryDetails: function (entry: LogEntry): void {
-            this.modalEntry = entry;
-            this.$refs.entryModal.$options.methods.showModal();
-        }
     },
 
     mounted() {
