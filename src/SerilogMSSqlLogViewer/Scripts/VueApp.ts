@@ -1,5 +1,4 @@
 ﻿import Vue from 'vue'
-import axios from 'axios'
 
 var app = new Vue({
     el: "#app",
@@ -8,18 +7,38 @@ var app = new Vue({
         errorMessage: "",
         logdata: []
     },
+
     mounted() {
-        axios.get("/Log")
-            .then((response) => {
+        $.getJSON("/Log")
+            .done((response) => {
                 this.isErrorVisible = false;
-                this.logdata = response.data;
-                console.debug("loaded " + response.data.length + " items.");
+                this.logdata = response;
+                console.debug("loaded " + response.length + " items.");
             })
-            .catch((error) => {
+            .fail((error) => {
                 this.isErrorVisible = true;
                 this.errorMessage = error.response.data;
                 console.log(this);
                 console.log(error);
             });
     }
+});
+
+Vue.filter("levelClass", function (value) {
+    switch (value) {
+        case "Error":
+            return "orange";
+        case "Fatal":
+            return "red";
+        case "Warning":
+            return "yellow";
+        case "Debug":
+            return "";
+        default:
+            return "blue";
+    }
+});
+
+Vue.filter("timestampFormatted", function (value) {
+    return (new Date(value)).toUTCString();
 });

@@ -8,18 +8,6 @@
     <log-table :pr_logdata="logdata"></log-table>
 </div>
 
-<div id="logModal" class="ui modal small">
-    <i class="close icon"></i>
-    <div class="header">
-        Log Entry
-    </div>
-    <div class="content">
-        
-    </div>
-    <div class="actions">
-        <div class="ui right button" onclick="showHideLogDetailModal(false)">Close</div>
-    </div>
-</div>
 
 <script type="text/javascript">
     var predefinedFilterProperties = JSON.parse('@Html.Raw(Json.Serialize(Model))');
@@ -27,27 +15,7 @@
 
 @Html.Partial("_Templates.cshtml")
 
-<script src="https://unpkg.com/vue"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
 <script src="~/js/Components/LogTable.js"></script>
 <script src="~/js/Components/LogEntry.js"></script>
 
 <script src="~/js/VueApp.js"></script>
-
-<script id="logModalTmpl" type="text/x-jsrender">
-    <div class="ui form">
-        <div class="inline fields">
-            <label style="width:100px">Level</label>
-            <div class="field">
-                <p>{{include tmpl="#logLevelTmpl"/}}</p>
-            </div>
-        </div>
-        <div class="inline fields">
-            <label style="width:100px">Timestamp</label>
-            <div class="field">
-                <p>{{:timestamp}}</p>
-            </div>
-        </div>
-    </div>
-</script>

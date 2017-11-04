@@ -2,5 +2,7 @@
 
 Vue.component("log-table", {
     template: "#logTableTmpl",
-    props: ["pr_logdata"]
+    props: {
+        pr_logdata: { type: Array, required: true }
+    }
 });

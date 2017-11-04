@@ -14,7 +14,7 @@ var tsProject = ts.createProject("tsconfig.json");
 
 var paths = {
     webroot: "./wwwroot/",
-    bowerroot: "./bower_components/",
+    node_modules: "./node_modules/",
     ts: "./Scripts/**/*.ts",
     scss: "./Styles/**/*.scss"
 };
@@ -90,23 +90,23 @@ gulp.task("watch:sass", function () {
 
 gulp.task("copy-semantic-ui", function () {
     return gulp.src([
-        paths.bowerroot + "semantic/dist/**/**"
+        paths.node_modules + "semantic-ui/dist/**/**"
     ])
-        .pipe(gulp.dest("./wwwroot/lib/semantic"));
+    .pipe(gulp.dest("./wwwroot/lib/semantic"));
 });
 
 gulp.task('copy-libs:release', ["copy-semantic-ui"], function () {
     return gulp.src([
-        paths.bowerroot + "jquery/dist/jquery.min.js",
-        paths.bowerroot + "jsrender/jsrender.min.js"
+        paths.node_modules + "jquery/dist/jquery.min.js",
+        paths.node_modules + "vue/dist/vue.min.js"
     ])
         .pipe(gulp.dest("./wwwroot/lib"));
 });
 
 gulp.task('copy-libs:dev', ["copy-semantic-ui"], function () {
     return gulp.src([
-        paths.bowerroot + "jquery/dist/jquery.js",
-        paths.bowerroot + "jsrender/jsrender.js"
+        paths.node_modules + "jquery/dist/**/*",
+        paths.node_modules + "vue/dist/vue.js"
     ])
         .pipe(gulp.dest("./wwwroot/lib"));
 });
