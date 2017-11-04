@@ -5,7 +5,8 @@
 
 <div id="app">
     <div v-cloak v-if="isErrorVisible" class="ui error message" role="alert"><div class="header">Error</div><p>{{ errorMessage }}</p></div>
-    <log-table :pr_logdata="logdata"></log-table>
+    <log-table :pr_logdata="logdata" v-on:evClickEntry="showEntryDetails"></log-table>
+    <log-entry-modal ref="entryModal" :pr_entry="modalEntry"></log-entry-modal>
 </div>
 
 

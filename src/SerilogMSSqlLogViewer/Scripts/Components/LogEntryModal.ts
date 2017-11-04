@@ -1,24 +1,31 @@
 ﻿import Vue from 'vue'
+import $ from "jquery"
 
 Vue.component("log-entry-modal", {
     template: "#logEntryModalTmpl",
-    props: ["pr_entry"],
-    computed: {
-        timestampFormatted: function (): string {
-            return (new Date(this.pr_entry.timestamp)).toUTCString();
+    props: {
+        pr_entry: {
+            type: Object
         },
-        levelClass: function (): string {
-            let level: string = this.pr_entry.level;
+        pr_show: { type: Boolean, required: true }
+    },
 
-            switch (level) {
-                case "Error":
-                    return "orange";
-                case "Fatal":
-                    return "red";
-                case "Warning":
-                    return "yellow";
-                default:
-                    return "blue";
+    data: function () {
+        return {
+            show: true
+        };
+    },
+    methods: {
+        showModal: function() {
+            this.show = true;
+            this.toggleModal();
+        },
+
+        toggleModal: function () {
+            if (this.show) {
+                $(".entryModal").modal("show");
+            } else {
+                $(".entryModal").modal("hide");
             }
         }
     }

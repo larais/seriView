@@ -1,16 +1,26 @@
 ﻿import Vue from 'vue'
+import $ from 'jquery'
 
 var app = new Vue({
     el: "#app",
     data: {
         isErrorVisible: false,
         errorMessage: "",
+        showModal: false,
+        modalEntry: null,
         logdata: []
+    },
+
+    methods: {
+        showEntryDetails: function (entry: LogEntry): void {
+            this.modalEntry = entry;
+            this.$refs.entryModal.$options.methods.showModal();
+        }
     },
 
     mounted() {
         $.getJSON("/Log")
-            .done((response) => {
+            .done((response: LogEntry[]) => {
                 this.isErrorVisible = false;
                 this.logdata = response;
                 console.debug("loaded " + response.length + " items.");

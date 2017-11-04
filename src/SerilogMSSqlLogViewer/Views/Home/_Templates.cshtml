@@ -44,7 +44,7 @@
 </script>
 
 <script type="text/x-template" id="logEntryModalTmpl">
-    <div class="ui modal small">
+    <div class="ui modal small entryModal">
         <i class="close icon"></i>
         <div class="header">
             Log Entry
@@ -54,13 +54,13 @@
                 <div class="inline fields">
                     <label style="width:100px">Level</label>
                     <div class="field">
-                        <p></p>
+                        <p><span class="ui horizontal label" v-bind:class="pr_entry.level | levelClass">{{ pr_entry.level }}</span></p>
                     </div>
                 </div>
                 <div class="inline fields">
                     <label style="width:100px">Timestamp</label>
                     <div class="field">
-                        <p>{{ timestamp}}</p>
+                        <p>{{ pr_entry.timestamp | timestampFormatted }}</p>
                     </div>
                 </div>
             </div>

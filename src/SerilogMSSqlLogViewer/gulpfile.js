@@ -49,7 +49,7 @@ gulp.task("compile-ts:dev", function () {
 
     return tsResult.js
         .pipe(sourcemaps.write())
-        .pipe(rmLines({ "filters": ["import Vue from 'vue'", "import axios from 'axios'"] }))
+        .pipe(rmLines({ "filters": ["^import\s[\S+]+\sfrom\s('\w+';)"] }))
         .pipe(gulp.dest(paths.webroot + "js"));
 });
 
@@ -88,24 +88,19 @@ gulp.task("watch:sass", function () {
     gulp.watch([paths.scss], ["compile-sass:dev"]);
 });
 
-gulp.task("copy-semantic-ui", function () {
+gulp.task('copy-libs:release', function () {
     return gulp.src([
-        paths.node_modules + "semantic-ui/dist/**/**"
-    ])
-    .pipe(gulp.dest("./wwwroot/lib/semantic"));
-});
-
-gulp.task('copy-libs:release', ["copy-semantic-ui"], function () {
-    return gulp.src([
+        "semantic/dist/**/**",
         paths.node_modules + "jquery/dist/jquery.min.js",
         paths.node_modules + "vue/dist/vue.min.js"
     ])
         .pipe(gulp.dest("./wwwroot/lib"));
 });
 
-gulp.task('copy-libs:dev', ["copy-semantic-ui"], function () {
+gulp.task('copy-libs:dev', function () {
     return gulp.src([
-        paths.node_modules + "jquery/dist/**/*",
+        "semantic/dist/**/**",
+        paths.node_modules + "jquery/dist/jquery.js",
         paths.node_modules + "vue/dist/vue.js"
     ])
         .pipe(gulp.dest("./wwwroot/lib"));

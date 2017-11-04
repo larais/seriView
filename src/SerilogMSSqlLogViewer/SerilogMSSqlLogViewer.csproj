@@ -8,16 +8,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="semantic\**" />
+    <Content Remove="semantic\**" />
+    <EmbeddedResource Remove="semantic\**" />
+    <None Remove="semantic\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Scripts\Components\LogEntry.ts" />
     <None Remove="Scripts\Components\LogEntryModal.ts" />
     <None Remove="Scripts\Components\LogTable.ts" />
+    <None Remove="Scripts\Model.ts" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Scripts\Site.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <Folder Include="wwwroot\js\" />
     <Folder Include="wwwroot\lib\" />
     <Folder Include="wwwroot\lib\" />
   </ItemGroup>
@@ -35,6 +40,7 @@
     <TypeScriptCompile Include="Scripts\Components\LogEntry.ts" />
     <TypeScriptCompile Include="Scripts\Components\LogEntryModal.ts" />
     <TypeScriptCompile Include="Scripts\Components\LogTable.ts" />
+    <TypeScriptCompile Include="Scripts\Model.ts" />
     <TypeScriptCompile Include="Scripts\VueApp.ts" />
   </ItemGroup>
 </Project>
