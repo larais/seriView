@@ -13,6 +13,12 @@ var app = new Vue({
         logdata: []
     },
 
+    methods: {
+        applyFilter: function (filter: string): void {
+            console.log("apply filter '" + filter + "'");
+        }
+    },
+
     mounted() {
         $.getJSON("/Log")
             .done((response: LogEntry[]) => {

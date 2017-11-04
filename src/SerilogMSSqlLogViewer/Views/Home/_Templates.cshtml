@@ -84,3 +84,13 @@
         </div>
     </div>
 </script>
+
+<script type="text/x-template" id="logFilterTmpl">
+    <div class="ui form">
+        <div class="field">
+            <label>Query</label>
+            <input v-model="filter">
+        </div>
+        <div class="ui submit button" v-on:click="evClickApply">Apply</div>
+    </div>
+</script>
