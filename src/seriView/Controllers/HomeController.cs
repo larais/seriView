@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using SerilogMSSqlLogViewer.Models;
+using SeriView.Models;
 
-namespace SerilogMSSqlLogViewer.Controllers
+namespace SeriView.Controllers
 {
     public class HomeController : Controller
     {

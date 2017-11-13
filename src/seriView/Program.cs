@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore;
 using Microsoft.Extensions.Configuration;
 
-namespace SerilogMSSqlLogViewer
+namespace SeriView
 {
     public class Program
     {

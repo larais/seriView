@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using SerilogMSSqlLogViewer.Models;
+using SeriView.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SerilogMSSqlLogViewer.Controllers
+namespace SeriView.Controllers
 {
     //[ApiExceptionFilter]
     [Route("Log")]

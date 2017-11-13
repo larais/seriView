@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.IO;
 
-namespace SerilogMSSqlLogViewer.Models
+namespace SeriView.Models
 {
     public class LogViewerConfig
     {

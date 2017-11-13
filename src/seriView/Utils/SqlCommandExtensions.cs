@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data.SqlClient;
 
-namespace SerilogMSSqlLogViewer.Utils
+namespace SeriView.Utils
 {
     public static class SqlCommandExtensions
     {

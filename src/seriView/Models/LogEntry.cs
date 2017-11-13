@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SerilogMSSqlLogViewer.Models
+namespace SeriView.Models
 {
     public class LogEntry
     {

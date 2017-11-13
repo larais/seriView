@@ -1,11 +1,11 @@
-﻿using SerilogMSSqlLogViewer.Models;
+﻿using SeriView.Models;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
-using SerilogMSSqlLogViewer.Utils;
+using SeriView.Utils;
 using System;
 
-namespace SerilogMSSqlLogViewer
+namespace SeriView
 {
     public class LogLoader
     {

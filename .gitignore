@@ -251,10 +251,10 @@ paket-files/
 .idea/
 *.sln.iml
 
-/src/SerilogMSSqlLogViewer/bower_components
-/src/SerilogMSSqlLogViewer/wwwroot/js/
-/src/SerilogMSSqlLogViewer/wwwroot/css/
-/src/SerilogMSSqlLogViewer/wwwroot/lib/
-/src/SerilogMSSqlLogViewer/Scripts/**/*.js
-/src/SerilogMSSqlLogViewer/Scripts/**/*.js.map
+/src/seriView/bower_components
+/src/seriView/wwwroot/js/
+/src/seriView/wwwroot/css/
+/src/seriView/wwwroot/lib/
+/src/seriView/Scripts/**/*.js
+/src/seriView/Scripts/**/*.js.map
 .vscode
