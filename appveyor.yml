@@ -8,4 +8,5 @@ image: Visual Studio 2017
 
 before_build:
  - nuget restore
+ - cd "src/seriView" && npm install typings -g
  - cd "src/seriView" && npm install
