@@ -17,6 +17,6 @@
   "dependencies": {
     "jquery": "^3.2.1",
     "semantic-ui": "^2.2.13",
-    "vue": "^2.5.3"
+    "vue": "^2.5.4"
   }
 }
