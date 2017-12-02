@@ -260,3 +260,4 @@ paket-files/
 /src/seriView/Scripts/*.js
 /src/seriView/Scripts/*.js.map
 .vscode
+src/seriView/wwwroot/antlr4/

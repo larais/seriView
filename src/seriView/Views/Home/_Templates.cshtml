@@ -93,10 +93,10 @@
 
 <script type="text/x-template" id="logFilterTmpl">
     <div class="ui form">
-        <div class="field">
+        <div class="field" v-bind:class="{ error: !is_valid && filter.length > 0 }">
             <label>Query</label>
             <input v-model="filter">
         </div>
-        <div class="ui submit button" v-on:click="evClickApply">Apply</div>
+        <div class="ui submit button" v-on:click="evClickApply" v-bind:class="{ disabled: !is_valid }">Apply</div>
     </div>
 </script>

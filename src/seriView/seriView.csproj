@@ -15,6 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Scripts\AntlrErrorListener.ts" />
+    <None Remove="Scripts\AntlrValidator.ts" />
     <None Remove="Scripts\Components\LogEntry.ts" />
     <None Remove="Scripts\Components\LogEntryModal.ts" />
     <None Remove="Scripts\Components\LogFilter.ts" />
@@ -32,6 +34,8 @@
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Scripts\AntlrErrorListener.ts" />
+    <TypeScriptCompile Include="Scripts\AntlrValidator.ts" />
     <TypeScriptCompile Include="Scripts\Components\LogEntry.ts" />
     <TypeScriptCompile Include="Scripts\Components\LogEntryModal.ts" />
     <TypeScriptCompile Include="Scripts\Components\LogFilter.ts" />
