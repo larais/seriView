@@ -255,6 +255,8 @@ paket-files/
 /src/seriView/wwwroot/js/
 /src/seriView/wwwroot/css/
 /src/seriView/wwwroot/lib/
-/src/seriView/Scripts/**/*.js
-/src/seriView/Scripts/**/*.js.map
+/src/seriView/Scripts/Components/*.js
+/src/seriView/Scripts/Components/*.js.map
+/src/seriView/Scripts/*.js
+/src/seriView/Scripts/*.js.map
 .vscode

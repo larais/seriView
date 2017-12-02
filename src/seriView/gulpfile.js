@@ -1,4 +1,4 @@
-﻿/// <binding BeforeBuild='compile-ts:dev, compile-sass:dev' Clean='clean' ProjectOpened='watch, compile-ts:dev, compile-sass:dev, copy-libs:release, copy-libs:dev, watch:ts' />
+﻿/// <binding BeforeBuild='compile-ts:dev, compile-sass:dev' Clean='clean' ProjectOpened='watch, copy-libs:release, watch:ts, dev' />
 
 var gulp = require('gulp'),
     ts = require("gulp-typescript"),
@@ -55,9 +55,12 @@ gulp.task("compile-ts:dev", function () {
 });
 
 gulp.task("compile-ts:release", function () {
-    return gulp.src(paths.ts)
-        .pipe(ts({
-            noImplicitAny: true
+    var tsResult = tsProject.src()
+        .pipe(tsProject());
+
+    return tsResult.js
+        .pipe(rmLines({
+            "filters": [/^import\s[\S +]+\sfrom\s(['"]\w+['"];$)/gm]
         }))
         .pipe(gulp.dest(paths.webroot + "js"));
 });
@@ -93,7 +96,8 @@ gulp.task('copy-libs:release', function () {
     return gulp.src([
         "semantic/dist/**/**",
         paths.node_modules + "jquery/dist/jquery.min.js",
-        paths.node_modules + "vue/dist/vue.min.js"
+        paths.node_modules + "vue/dist/vue.min.js",
+        "./Scripts/Sqe/require.js"
     ])
         .pipe(gulp.dest("./wwwroot/lib"));
 });
@@ -102,9 +106,26 @@ gulp.task('copy-libs:dev', function () {
     return gulp.src([
         "semantic/dist/**/**",
         paths.node_modules + "jquery/dist/jquery.js",
-        paths.node_modules + "vue/dist/vue.js"
+        paths.node_modules + "vue/dist/vue.js",
+        "./Scripts/Sqe/require.js"
     ])
         .pipe(gulp.dest("./wwwroot/lib"));
 });
 
-gulp.task("release", ["compile-ts:release", "compile-sass:release", "copy-libs:release"]);
+gulp.task('copy-sqe', function () {
+    return gulp.src([
+        "./Scripts/Sqe/**/*",
+        "!./Scripts / Sqe / require.js"
+    ])
+        .pipe(gulp.dest("./wwwroot/lib/SQE"));
+})
+
+gulp.task("copy-antlr-rt", function () {
+    gulp.src([
+        "node_modules/antlr4/**/*"
+    ])
+        .pipe(gulp.dest("wwwroot/antlr4"));
+});
+
+gulp.task("dev", ["compile-ts:dev", "compile-sass:dev", "copy-libs:dev", "copy-antlr-rt", "copy-sqe"]);
+gulp.task("release", ["compile-ts:release", "compile-sass:release", "copy-libs:release", "copy-antlr-rt", "copy-sqe"]);
