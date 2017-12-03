@@ -18,10 +18,10 @@ namespace SeriView.Controllers
         }
 
         [HttpGet]
-        public async Task<IList<LogEntry>> Get(List<string> level, int topEntriesCount = 100)
+        public async Task<IList<LogEntry>> Get(string filter = null)
         {
             var logLoader = new LogLoader(config);
-            var log = await logLoader.GetLogEntries(topEntriesCount, level);
+            var log = await logLoader.GetLogEntries(100, new List<string>());
             return log;
         }
     }

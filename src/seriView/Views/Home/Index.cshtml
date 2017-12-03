@@ -4,7 +4,7 @@
 }
 
 <div id="app">
-    <log-filter v-on:em_apply_filter="applyFilter"></log-filter>
+    <log-filter v-on:em_apply_filter="loadLogs"></log-filter>
     <div v-cloak v-if="isErrorVisible" class="ui error message" role="alert"><div class="header">Error</div><p>{{ errorMessage }}</p></div>
     <log-table :pr_logdata="logdata" :pr_is_loading="isLoadingLogs"></log-table>
     <log-entry-modal></log-entry-modal>
