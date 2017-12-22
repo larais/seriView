@@ -97,7 +97,8 @@ gulp.task('copy-libs:release', function () {
         "semantic/dist/**/**",
         paths.node_modules + "jquery/dist/jquery.min.js",
         paths.node_modules + "vue/dist/vue.min.js",
-        "./Scripts/Sqe/require.js"
+        paths.node_modules + "moment/min/moment.min.js",
+        "./Scripts/Lib/**/**"
     ])
         .pipe(gulp.dest("./wwwroot/lib"));
 });
@@ -107,15 +108,15 @@ gulp.task('copy-libs:dev', function () {
         "semantic/dist/**/**",
         paths.node_modules + "jquery/dist/jquery.js",
         paths.node_modules + "vue/dist/vue.js",
-        "./Scripts/Sqe/require.js"
+        paths.node_modules + "moment/moment.js",
+        "./Scripts/Lib/**/**"
     ])
         .pipe(gulp.dest("./wwwroot/lib"));
 });
 
 gulp.task('copy-sqe', function () {
     return gulp.src([
-        "./Scripts/Sqe/**/*",
-        "!./Scripts / Sqe / require.js"
+        "./Scripts/Sqe/**/*"
     ])
         .pipe(gulp.dest("./wwwroot/lib/SQE"));
 })

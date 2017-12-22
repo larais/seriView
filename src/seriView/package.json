@@ -17,6 +17,7 @@
   "dependencies": {
     "antlr4": "^4.7.0",
     "jquery": "^3.2.1",
+    "moment": "^2.19.4",
     "semantic-ui": "^2.2.13",
     "vue": "^2.5.4"
   }

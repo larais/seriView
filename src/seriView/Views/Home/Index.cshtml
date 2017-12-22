@@ -13,6 +13,11 @@
 
 <script type="text/javascript">
     var predefinedFilterProperties = JSON.parse('@Html.Raw(Json.Serialize(Model))');
+
+    $(document).ready(function () {
+        $('#timepicker').daterangepicker();
+        $(".ui.fluid.dropdown").dropdown();
+    });
 </script>
 
 @Html.Partial("_Templates.cshtml")

@@ -95,8 +95,28 @@
     <div class="ui form">
         <div class="field" v-bind:class="{ error: !is_valid && filter.length > 0 }">
             <label>Query</label>
-            <input v-model="filter">
+            <textarea v-model="filter"></textarea>
         </div>
-        <div class="ui submit button" v-on:click="evClickApply" v-bind:class="{ disabled: !is_valid }">Apply</div>
+
+        <div class="fields">
+            <div class="field">
+                <label>&nbsp;</label>
+                <div class="ui submit button" v-on:click="evClickApply" v-bind:class="{ disabled: !is_valid }">Apply</div>
+            </div>
+            <div class="field">
+                <label>Time frame</label>
+                <input type="text" name="timepicker"
+                       id="timepicker"
+                       value="03/18/2013 - 03/23/2013" />
+            </div>
+            <div class="field">
+                <label>Restrict Log level</label>
+                <select name="loglevels" multiple="" class="ui fluid dropdown">
+                    <option value="verbose">Verbose</option>
+                    <option value="debug">Debug</option>
+                    <option value="information">Information</option>
+                </select>
+            </div>
+        </div>
     </div>
 </script>
