@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using SeriView.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SeriView.Controllers
 {
-    //[ApiExceptionFilter]
     [Route("Log")]
     public class LogController : Controller
     {
@@ -20,8 +20,13 @@ namespace SeriView.Controllers
         [HttpGet]
         public async Task<IList<LogEntry>> Get(string filter = null)
         {
+            if (filter != null && !SQE.CSharp.SQE.IsValidSyntax(filter))
+            {
+                throw new Exception("Wrong syntax!");
+            }
+
             var logLoader = new LogLoader(config);
-            var log = await logLoader.GetLogEntries(100, new List<string>());
+            var log = await logLoader.GetLogEntries(filter, 100);
             return log;
         }
     }

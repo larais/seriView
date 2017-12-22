@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Threading.Tasks;
 using SeriView.Utils;
 using System;
+using SQE.CSharp.SQLGenerators;
 
 namespace SeriView
 {
@@ -20,55 +21,41 @@ namespace SeriView
             }
         }
 
-        public async Task<IList<LogEntry>> GetLogEntries(int top, List<string> logLevels)
+        public async Task<IList<LogEntry>> GetLogEntries(string filter, int top)
         {
-            var filterLevels = logLevels.Count > 0;
-            
-            List<LogEntry> entries = new List<LogEntry>(100);
+            List<LogEntry> entries = new List<LogEntry>(top);
+
+            SqlCommand sqlCommand;
+            if (filter != null)
+            {
+                sqlCommand = SQE.CSharp.SQE.GenerateCommand(new MSSQLGenerator(config.LogTable), filter);
+            }
+            else
+            {
+                sqlCommand = new SqlCommand($"SELECT TOP {top} * FROM {config.LogTable} ORDER BY TimeStamp DESC");
+            }
+
             using (SqlConnection connection = new SqlConnection(config.ConnectionString))
             {
                 await connection.OpenAsync();
-
-                var query = BuildQuery(filterLevels);
-
-                using (SqlCommand cmd = new SqlCommand(query, connection))
+                sqlCommand.Connection = connection;
+                using (var reader = await sqlCommand.ExecuteReaderAsync())
                 {
-                    cmd.Parameters.AddWithValue("@top", top);
-
-                    if (filterLevels) cmd.AddArrayParameters("levels", logLevels);
-
-                    using (var reader = await cmd.ExecuteReaderAsync())
+                    while (await reader.ReadAsync())
                     {
-                        while (await reader.ReadAsync())
+                        entries.Add(new LogEntry()
                         {
-                            entries.Add(new LogEntry()
-                            {
-                                Id = reader.GetInt32(0),
-                                Message = reader.GetString(1),
-                                Level = reader.GetString(3),
-                                Timestamp = reader.GetDateTime(4),
-                                Properties = reader.GetString(6)
-                            });
-                        }
+                            Id = reader.GetInt32(0),
+                            Message = reader.GetString(1),
+                            Level = reader.GetString(3),
+                            Timestamp = reader.GetDateTime(4),
+                            Properties = reader.GetString(6)
+                        });
                     }
                 }
             }
 
             return entries;
-        }
-
-        private string BuildQuery(bool filterLevels)
-        {
-            var query = $"SELECT TOP (@top) * FROM {config.LogTable} ";
-
-            if (filterLevels)
-            {
-                query += "WHERE Level IN ({levels}) ";
-            }
-
-            query += "ORDER BY TimeStamp DESC";
-
-            return query;
         }
     }
 }
