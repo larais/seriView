@@ -15,13 +15,15 @@ var app = new Vue({
     },
 
     methods: {
-        applyFilter: function (filter: string): void {
-            console.log("apply filter '" + filter + "'");
-        },
-
         loadLogs(filter: string = null): void {
             this.isLoadingLogs = true;
-            $.getJSON("/Log")
+
+            console.debug("load logs with filter: " + filter);
+
+            $.getJSON("/Log",
+                {
+                    filter: filter
+                })
                 .done((response: LogEntry[]) => {
                     this.isErrorVisible = false;
                     this.logdata = response;
