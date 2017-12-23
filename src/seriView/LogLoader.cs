@@ -26,14 +26,14 @@ namespace SeriView
             List<LogEntry> entries = new List<LogEntry>(top);
 
             SqlCommand sqlCommand;
-            if (filter != null)
-            {
+            //if (filter != null)
+            //{
                 sqlCommand = SQE.CSharp.SQE.GenerateCommand(new MSSQLGenerator(config.LogTable), filter);
-            }
-            else
-            {
-                sqlCommand = new SqlCommand($"SELECT TOP {top} * FROM {config.LogTable} ORDER BY TimeStamp DESC");
-            }
+            //}
+            //else
+            //{
+            //    sqlCommand = new SqlCommand($"SELECT TOP {top} * FROM {config.LogTable} ORDER BY TimeStamp DESC");
+            //}
 
             using (SqlConnection connection = new SqlConnection(config.ConnectionString))
             {

@@ -18,15 +18,15 @@ namespace SeriView.Controllers
         }
 
         [HttpGet]
-        public async Task<IList<LogEntry>> Get(string filter = null)
+        public async Task<IList<LogEntry>> Get(string filter = "")
         {
-            if (filter != null && !SQE.CSharp.SQE.IsValidSyntax(filter))
+            if (!string.IsNullOrEmpty(filter) && !SQE.CSharp.SQE.IsValidSyntax(filter))
             {
                 throw new Exception("Wrong syntax!");
             }
 
             var logLoader = new LogLoader(config);
-            var log = await logLoader.GetLogEntries(filter, 100);
+            var log = await logLoader.GetLogEntries(filter ?? string.Empty, 100);
             return log;
         }
     }
