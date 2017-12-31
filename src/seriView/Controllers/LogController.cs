@@ -20,7 +20,7 @@ namespace SeriView.Controllers
         [HttpGet]
         public async Task<IList<LogEntry>> Get(string filter = null)
         {
-            if (filter != null && !SQE.CSharp.SQE.IsValidSyntax(filter))
+            if (filter != null && !SQE.SQE.IsValidSyntax(filter))
             {
                 throw new Exception("Wrong syntax!");
             }

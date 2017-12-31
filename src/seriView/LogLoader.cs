@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 using System.Threading.Tasks;
 using SeriView.Utils;
 using System;
-using SQE.CSharp.SQLGenerators;
+using SQE.SQLGenerators;
 
 namespace SeriView
 {
@@ -25,15 +25,9 @@ namespace SeriView
         {
             List<LogEntry> entries = new List<LogEntry>(top);
 
-            SqlCommand sqlCommand;
-            if (filter != null)
-            {
-                sqlCommand = SQE.CSharp.SQE.GenerateCommand(new MSSQLGenerator(config.LogTable), filter);
-            }
-            else
-            {
-                sqlCommand = new SqlCommand($"SELECT TOP {top} * FROM {config.LogTable} ORDER BY TimeStamp DESC");
-            }
+            filter = filter ?? string.Empty;
+
+            SqlCommand sqlCommand = SQE.SQE.GenerateCommand(new MSSQLGenerator(config.LogTable), filter);
 
             using (SqlConnection connection = new SqlConnection(config.ConnectionString))
             {

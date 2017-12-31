@@ -6,29 +6,31 @@ var SQEVisitor = require('./SQEVisitor').SQEVisitor;
 var grammarFileName = "SQE.g4";
 
 var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
-    "\u0003\f\"\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0003\u0002\u0003",
-    "\u0002\u0003\u0002\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003",
+    "\u0003\f%\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0003\u0002\u0003",
+    "\u0002\u0003\u0002\u0003\u0002\u0005\u0002\u000b\n\u0002\u0003\u0003",
     "\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003",
-    "\u0003\u0005\u0003\u0015\n\u0003\u0003\u0003\u0003\u0003\u0003\u0003",
-    "\u0003\u0003\u0003\u0003\u0003\u0003\u0007\u0003\u001d\n\u0003\f\u0003",
-    "\u000e\u0003 \u000b\u0003\u0003\u0003\u0002\u0003\u0004\u0004\u0002",
-    "\u0004\u0002\u0002\u0002#\u0002\u0006\u0003\u0002\u0002\u0002\u0004",
-    "\u0014\u0003\u0002\u0002\u0002\u0006\u0007\u0005\u0004\u0003\u0002\u0007",
-    "\b\u0007\u0002\u0002\u0003\b\u0003\u0003\u0002\u0002\u0002\t\n\b\u0003",
-    "\u0001\u0002\n\u000b\u0007\u0003\u0002\u0002\u000b\f\u0005\u0004\u0003",
-    "\u0002\f\r\u0007\u0004\u0002\u0002\r\u0015\u0003\u0002\u0002\u0002\u000e",
-    "\u000f\u0007\t\u0002\u0002\u000f\u0010\u0007\u0007\u0002\u0002\u0010",
-    "\u0015\u0007\b\u0002\u0002\u0011\u0012\u0007\t\u0002\u0002\u0012\u0013",
-    "\u0007\u0007\u0002\u0002\u0013\u0015\u0007\n\u0002\u0002\u0014\t\u0003",
-    "\u0002\u0002\u0002\u0014\u000e\u0003\u0002\u0002\u0002\u0014\u0011\u0003",
-    "\u0002\u0002\u0002\u0015\u001e\u0003\u0002\u0002\u0002\u0016\u0017\f",
-    "\u0006\u0002\u0002\u0017\u0018\u0007\u0005\u0002\u0002\u0018\u001d\u0005",
-    "\u0004\u0003\u0007\u0019\u001a\f\u0005\u0002\u0002\u001a\u001b\u0007",
-    "\u0006\u0002\u0002\u001b\u001d\u0005\u0004\u0003\u0006\u001c\u0016\u0003",
-    "\u0002\u0002\u0002\u001c\u0019\u0003\u0002\u0002\u0002\u001d \u0003",
-    "\u0002\u0002\u0002\u001e\u001c\u0003\u0002\u0002\u0002\u001e\u001f\u0003",
-    "\u0002\u0002\u0002\u001f\u0005\u0003\u0002\u0002\u0002 \u001e\u0003",
-    "\u0002\u0002\u0002\u0005\u0014\u001c\u001e"].join("");
+    "\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0005\u0003\u0018\n",
+    "\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003",
+    "\u0003\u0007\u0003 \n\u0003\f\u0003\u000e\u0003#\u000b\u0003\u0003\u0003",
+    "\u0002\u0003\u0004\u0004\u0002\u0004\u0002\u0002\u0002\'\u0002\n\u0003",
+    "\u0002\u0002\u0002\u0004\u0017\u0003\u0002\u0002\u0002\u0006\u0007\u0005",
+    "\u0004\u0003\u0002\u0007\b\u0007\u0002\u0002\u0003\b\u000b\u0003\u0002",
+    "\u0002\u0002\t\u000b\u0007\u0002\u0002\u0003\n\u0006\u0003\u0002\u0002",
+    "\u0002\n\t\u0003\u0002\u0002\u0002\u000b\u0003\u0003\u0002\u0002\u0002",
+    "\f\r\b\u0003\u0001\u0002\r\u000e\u0007\u0003\u0002\u0002\u000e\u000f",
+    "\u0005\u0004\u0003\u0002\u000f\u0010\u0007\u0004\u0002\u0002\u0010\u0018",
+    "\u0003\u0002\u0002\u0002\u0011\u0012\u0007\t\u0002\u0002\u0012\u0013",
+    "\u0007\u0007\u0002\u0002\u0013\u0018\u0007\b\u0002\u0002\u0014\u0015",
+    "\u0007\t\u0002\u0002\u0015\u0016\u0007\u0007\u0002\u0002\u0016\u0018",
+    "\u0007\n\u0002\u0002\u0017\f\u0003\u0002\u0002\u0002\u0017\u0011\u0003",
+    "\u0002\u0002\u0002\u0017\u0014\u0003\u0002\u0002\u0002\u0018!\u0003",
+    "\u0002\u0002\u0002\u0019\u001a\f\u0006\u0002\u0002\u001a\u001b\u0007",
+    "\u0005\u0002\u0002\u001b \u0005\u0004\u0003\u0007\u001c\u001d\f\u0005",
+    "\u0002\u0002\u001d\u001e\u0007\u0006\u0002\u0002\u001e \u0005\u0004",
+    "\u0003\u0006\u001f\u0019\u0003\u0002\u0002\u0002\u001f\u001c\u0003\u0002",
+    "\u0002\u0002 #\u0003\u0002\u0002\u0002!\u001f\u0003\u0002\u0002\u0002",
+    "!\"\u0003\u0002\u0002\u0002\"\u0005\u0003\u0002\u0002\u0002#!\u0003",
+    "\u0002\u0002\u0002\u0006\n\u0017\u001f!"].join("");
 
 
 var atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
@@ -37,8 +39,8 @@ var decisionsToDFA = atn.decisionToState.map( function(ds, index) { return new a
 
 var sharedContextCache = new antlr4.PredictionContextCache();
 
-var literalNames = [ null, "'('", "')'", "'and'", "'or'", null, null, null, 
-                     null, "' '" ];
+var literalNames = [ null, "'('", "')'", null, null, null, null, null, null, 
+                     "' '" ];
 
 var symbolicNames = [ null, null, null, "AND", "OR", "OPERATOR", "NUMBER", 
                       "PROPERTY", "ESCAPEDSTRING", "WHITESPACE", "NEWLINE" ];
@@ -120,11 +122,25 @@ SQEParser.prototype.expression = function() {
     var localctx = new ExpressionContext(this, this._ctx, this.state);
     this.enterRule(localctx, 0, SQEParser.RULE_expression);
     try {
-        this.enterOuterAlt(localctx, 1);
-        this.state = 4;
-        this.mainExpr(0);
-        this.state = 5;
-        this.match(SQEParser.EOF);
+        this.state = 8;
+        this._errHandler.sync(this);
+        switch(this._input.LA(1)) {
+        case SQEParser.T__0:
+        case SQEParser.PROPERTY:
+            this.enterOuterAlt(localctx, 1);
+            this.state = 4;
+            this.mainExpr(0);
+            this.state = 5;
+            this.match(SQEParser.EOF);
+            break;
+        case SQEParser.EOF:
+            this.enterOuterAlt(localctx, 2);
+            this.state = 7;
+            this.match(SQEParser.EOF);
+            break;
+        default:
+            throw new antlr4.error.NoViableAltException(this);
+        }
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;
@@ -327,20 +343,20 @@ SQEParser.prototype.mainExpr = function(_p) {
     this.enterRecursionRule(localctx, 2, SQEParser.RULE_mainExpr, _p);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 18;
+        this.state = 21;
         this._errHandler.sync(this);
-        var la_ = this._interp.adaptivePredict(this._input,0,this._ctx);
+        var la_ = this._interp.adaptivePredict(this._input,1,this._ctx);
         switch(la_) {
         case 1:
             localctx = new ParenthesisExpContext(this, localctx);
             this._ctx = localctx;
             _prevctx = localctx;
 
-            this.state = 8;
+            this.state = 11;
             this.match(SQEParser.T__0);
-            this.state = 9;
+            this.state = 12;
             this.mainExpr(0);
-            this.state = 10;
+            this.state = 13;
             this.match(SQEParser.T__1);
             break;
 
@@ -348,11 +364,11 @@ SQEParser.prototype.mainExpr = function(_p) {
             localctx = new CompareNumberExpContext(this, localctx);
             this._ctx = localctx;
             _prevctx = localctx;
-            this.state = 12;
+            this.state = 15;
             this.match(SQEParser.PROPERTY);
-            this.state = 13;
+            this.state = 16;
             this.match(SQEParser.OPERATOR);
-            this.state = 14;
+            this.state = 17;
             this.match(SQEParser.NUMBER);
             break;
 
@@ -360,60 +376,60 @@ SQEParser.prototype.mainExpr = function(_p) {
             localctx = new CompareStringExpContext(this, localctx);
             this._ctx = localctx;
             _prevctx = localctx;
-            this.state = 15;
+            this.state = 18;
             this.match(SQEParser.PROPERTY);
-            this.state = 16;
+            this.state = 19;
             this.match(SQEParser.OPERATOR);
-            this.state = 17;
+            this.state = 20;
             this.match(SQEParser.ESCAPEDSTRING);
             break;
 
         }
         this._ctx.stop = this._input.LT(-1);
-        this.state = 28;
+        this.state = 31;
         this._errHandler.sync(this);
-        var _alt = this._interp.adaptivePredict(this._input,2,this._ctx)
+        var _alt = this._interp.adaptivePredict(this._input,3,this._ctx)
         while(_alt!=2 && _alt!=antlr4.atn.ATN.INVALID_ALT_NUMBER) {
             if(_alt===1) {
                 if(this._parseListeners!==null) {
                     this.triggerExitRuleEvent();
                 }
                 _prevctx = localctx;
-                this.state = 26;
+                this.state = 29;
                 this._errHandler.sync(this);
-                var la_ = this._interp.adaptivePredict(this._input,1,this._ctx);
+                var la_ = this._interp.adaptivePredict(this._input,2,this._ctx);
                 switch(la_) {
                 case 1:
                     localctx = new AndExpContext(this, new MainExprContext(this, _parentctx, _parentState));
                     this.pushNewRecursionContext(localctx, _startState, SQEParser.RULE_mainExpr);
-                    this.state = 20;
+                    this.state = 23;
                     if (!( this.precpred(this._ctx, 4))) {
                         throw new antlr4.error.FailedPredicateException(this, "this.precpred(this._ctx, 4)");
                     }
-                    this.state = 21;
+                    this.state = 24;
                     this.match(SQEParser.AND);
-                    this.state = 22;
+                    this.state = 25;
                     this.mainExpr(5);
                     break;
 
                 case 2:
                     localctx = new OrExpContext(this, new MainExprContext(this, _parentctx, _parentState));
                     this.pushNewRecursionContext(localctx, _startState, SQEParser.RULE_mainExpr);
-                    this.state = 23;
+                    this.state = 26;
                     if (!( this.precpred(this._ctx, 3))) {
                         throw new antlr4.error.FailedPredicateException(this, "this.precpred(this._ctx, 3)");
                     }
-                    this.state = 24;
+                    this.state = 27;
                     this.match(SQEParser.OR);
-                    this.state = 25;
+                    this.state = 28;
                     this.mainExpr(4);
                     break;
 
                 } 
             }
-            this.state = 30;
+            this.state = 33;
             this._errHandler.sync(this);
-            _alt = this._interp.adaptivePredict(this._input,2,this._ctx);
+            _alt = this._interp.adaptivePredict(this._input,3,this._ctx);
         }
 
     } catch( error) {
