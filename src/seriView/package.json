@@ -3,16 +3,17 @@
   "name": "asp.net",
   "private": true,
   "devDependencies": {
-    "graceful-fs": "^4.1.11",
+    "graceful-fs": "4.1.11",
     "gulp": "3.9.1",
-    "gulp-plumber": "1.1.0",
+    "gulp-plumber": "1.2.0",
     "gulp-rename": "1.2.2",
-    "gulp-rimraf": "0.2.1",
+    "gulp-rimraf": "0.2.2",
     "gulp-rm-lines": "0.0.9",
-    "gulp-sass": "^3.1.0",
-    "gulp-typescript": "3.1.6",
+    "gulp-sass": "3.1.0",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-typescript": "4.0.1",
     "gulp-typings": "2.0.4",
-    "typescript": "^2.6.1"
+    "typescript": "2.7.1"
   },
   "dependencies": {
     "antlr4": "^4.7.0",
