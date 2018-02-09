@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
-using SeriView.Utils;
 using System;
 using SQE.SQLGenerators;
 
@@ -15,7 +14,7 @@ namespace SeriView
         public LogLoader(LogViewerConfig config)
         {
             this.config = config;
-            if (string.IsNullOrEmpty(this.config.ConnectionString))
+            if (string.IsNullOrEmpty(this.config.ConnectionStrings.LogServer))
             {
                 throw new InvalidOperationException("ConnectionString is empty. Please check your configuration.") { Source = "Log loader" };
             }
@@ -29,7 +28,7 @@ namespace SeriView
 
             SqlCommand sqlCommand = SQE.SQE.GenerateCommand(new MSSQLGenerator(config.LogTable), filter);
 
-            using (SqlConnection connection = new SqlConnection(config.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(config.ConnectionStrings.LogServer))
             {
                 await connection.OpenAsync();
                 sqlCommand.Connection = connection;
