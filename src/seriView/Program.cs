@@ -19,6 +19,7 @@ namespace SeriView
                     config.Sources.Clear();
                     config.AddJsonFile("appsettings.json", optional: true);
                     config.AddUserSecrets<Startup>();
+                    config.AddEnvironmentVariables();
                 })
                 .Build();
     }
