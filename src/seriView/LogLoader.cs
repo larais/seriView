@@ -9,12 +9,14 @@ namespace SeriView
 {
     public class LogLoader
     {
-        private readonly LogViewerConfig config;
+        private readonly string connectionString;
+        private readonly string table;
 
-        public LogLoader(LogViewerConfig config)
+        public LogLoader(string connectionString, string table)
         {
-            this.config = config;
-            if (string.IsNullOrEmpty(this.config.ConnectionStrings.LogServer))
+            this.connectionString = connectionString;
+            this.table = table;
+            if (string.IsNullOrEmpty(this.connectionString))
             {
                 throw new InvalidOperationException("ConnectionString is empty. Please check your configuration.") { Source = "Log loader" };
             }
@@ -26,9 +28,9 @@ namespace SeriView
 
             filter = filter ?? string.Empty;
 
-            SqlCommand sqlCommand = SQE.SQE.GenerateCommand(new MSSQLGenerator(config.LogTable), filter);
+            SqlCommand sqlCommand = SQE.SQE.GenerateCommand(new MSSQLGenerator(table), filter);
 
-            using (SqlConnection connection = new SqlConnection(config.ConnectionStrings.LogServer))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 await connection.OpenAsync();
                 sqlCommand.Connection = connection;
