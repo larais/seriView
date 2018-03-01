@@ -13,7 +13,7 @@
     "gulp-sourcemaps": "^2.6.4",
     "gulp-typescript": "4.0.1",
     "gulp-typings": "2.0.4",
-    "typescript": "2.7.1"
+    "typescript": "2.7.2"
   },
   "dependencies": {
     "antlr4": "^4.7.0",
