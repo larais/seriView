@@ -19,7 +19,7 @@ namespace SeriView.Controllers
         }
 
         [HttpGet]
-        public async Task<IList<LogEntry>> Get(string filter = null)
+        public async Task<IList<LogEntry>> Get(string filter = null, int page = 1, int pageSize = 50)
         {
             if (filter != null && !SQE.SQE.IsValidSyntax(filter))
             {
