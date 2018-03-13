@@ -1,5 +1,4 @@
-﻿/// <binding BeforeBuild='compile-ts:dev, compile-sass:dev' Clean='clean' ProjectOpened='watch, copy-libs:release, watch:ts, dev' />
-
+/// <binding BeforeBuild='compile-ts:dev, compile-sass:dev' Clean='clean' ProjectOpened='watch, copy-libs:release, watch:ts, dev' />
 var gulp = require('gulp'),
     ts = require("gulp-typescript"),
     sass = require("gulp-sass"),
