@@ -8,13 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="semantic\**" />
-    <Content Remove="semantic\**" />
-    <EmbeddedResource Remove="semantic\**" />
-    <None Remove="semantic\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Scripts\AntlrErrorListener.ts" />
     <None Remove="Scripts\AntlrValidator.ts" />
     <None Remove="Scripts\Components\LogEntry.ts" />

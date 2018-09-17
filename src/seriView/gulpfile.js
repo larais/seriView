@@ -4,7 +4,6 @@ var gulp = require('gulp'),
     ts = require("gulp-typescript"),
     sass = require("gulp-sass"),
     rename = require('gulp-rename'),
-    gulpTypings = require("gulp-typings"),
     sourcemaps = require('gulp-sourcemaps'),
     rimraf = require("gulp-rimraf"),
     plumber = require('gulp-plumber'),
@@ -24,8 +23,6 @@ var errorHandler = function (error) {
     this.emit('end');
 };
 
-gulp.task('clean', ['clean:js', 'clean:css']);
-
 gulp.task("clean:js", function () {
     return gulp.src('./wwwroot/**/*.js', { read: false })
         .pipe(rimraf());
@@ -36,11 +33,7 @@ gulp.task("clean:css", function () {
         .pipe(rimraf());
 });
 
-gulp.task("installTypings", function () {
-    var stream = gulp.src("./typings.json")
-        .pipe(gulpTypings()); 
-    return stream;
-});
+gulp.task('clean', gulp.parallel(['clean:js', 'clean:css']));
 
 gulp.task("compile-ts:dev", function () {
     var tsResult = tsProject.src()
@@ -82,8 +75,6 @@ gulp.task("compile-sass:release", function () {
         .pipe(gulp.dest(paths.webroot + 'css'));
 });
 
-gulp.task('watch', ['watch:ts', 'watch:sass']);
-
 gulp.task("watch:ts", function () {
     gulp.watch([paths.ts], ["compile-ts:dev"]);
 });
@@ -92,11 +83,10 @@ gulp.task("watch:sass", function () {
     gulp.watch([paths.scss], ["compile-sass:dev"]);
 });
 
+gulp.task('watch', gulp.parallel(['watch:ts', 'watch:sass']));
+
 gulp.task('copy-libs:release', function () {
     return gulp.src([
-        "semantic/dist/**/**",
-        paths.node_modules + "jquery/dist/jquery.min.js",
-        paths.node_modules + "vue/dist/vue.min.js",
         "./Scripts/Sqe/require.js"
     ])
         .pipe(gulp.dest("./wwwroot/lib"));
@@ -104,9 +94,6 @@ gulp.task('copy-libs:release', function () {
 
 gulp.task('copy-libs:dev', function () {
     return gulp.src([
-        "semantic/dist/**/**",
-        paths.node_modules + "jquery/dist/jquery.js",
-        paths.node_modules + "vue/dist/vue.js",
         "./Scripts/Sqe/require.js"
     ])
         .pipe(gulp.dest("./wwwroot/lib"));
@@ -115,10 +102,10 @@ gulp.task('copy-libs:dev', function () {
 gulp.task('copy-sqe', function () {
     return gulp.src([
         "./Scripts/Sqe/**/*",
-        "!./Scripts / Sqe / require.js"
+        "!./Scripts/Sqe/require.js"
     ])
         .pipe(gulp.dest("./wwwroot/lib/SQE"));
-})
+});
 
 gulp.task("copy-antlr-rt", function () {
     gulp.src([
@@ -127,5 +114,5 @@ gulp.task("copy-antlr-rt", function () {
         .pipe(gulp.dest("wwwroot/antlr4"));
 });
 
-gulp.task("dev", ["compile-ts:dev", "compile-sass:dev", "copy-libs:dev", "copy-antlr-rt", "copy-sqe"]);
-gulp.task("release", ["compile-ts:release", "compile-sass:release", "copy-libs:release", "copy-antlr-rt", "copy-sqe"]);
+gulp.task("dev", gulp.parallel(["compile-ts:dev", "compile-sass:dev", "copy-libs:dev", "copy-antlr-rt", "copy-sqe"]));
+gulp.task("release", gulp.parallel(["compile-ts:release", "compile-sass:release", "copy-libs:release", "copy-antlr-rt", "copy-sqe"]));
