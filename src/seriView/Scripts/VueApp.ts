@@ -1,4 +1,4 @@
-﻿import Vue from 'vue'
+﻿import Vue from "vue";
 
 var eventBus = new Vue();
 
@@ -31,7 +31,7 @@ var app = new Vue({
                 })
                 .fail((error) => {
                     this.isErrorVisible = true;
-                    this.errorMessage = error.statusText;
+                    this.errorMessage = error.responseText;
                     console.log(this);
                     console.log(error);
                     this.isLoadingLogs = false;

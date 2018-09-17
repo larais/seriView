@@ -32,6 +32,11 @@
         "themes/default/assets/fonts/icons.woff",
         "themes/default/assets/fonts/icons.woff2"
       ]
+    },
+    {
+      "provider": "unpkg",
+      "library": "antlr4@4.7.1",
+      "destination": "wwwroot/antlr4/"
     }
   ]
 }
