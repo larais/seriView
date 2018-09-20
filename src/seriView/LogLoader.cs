@@ -28,7 +28,7 @@ namespace SeriView
 
             filter = filter ?? string.Empty;
 
-            SqlCommand sqlCommand = SQE.SQE.GenerateCommand(new MSSQLGenerator(table, paginationWindowSize: pageSize, paginationOffset: page), filter);
+            SqlCommand sqlCommand = SQE.SQE.GenerateCommand(new MSSQLGenerator(table, paginationWindowSize: pageSize, usePaging: true), filter, page);
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
