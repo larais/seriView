@@ -4,21 +4,21 @@
   "private": true,
   "devDependencies": {
     "graceful-fs": "4.1.11",
-    "gulp": "3.9.1",
+    "gulp": "^4.0.0",
     "gulp-plumber": "1.2.0",
-    "gulp-rename": "1.2.2",
+    "gulp-rename": "1.4.0",
     "gulp-rimraf": "0.2.2",
     "gulp-rm-lines": "0.0.9",
-    "gulp-sass": "3.1.0",
+    "gulp-sass": "4.0.1",
     "gulp-sourcemaps": "^2.6.4",
-    "gulp-typescript": "4.0.1",
-    "gulp-typings": "2.0.4",
-    "typescript": "2.7.2"
+    "gulp-typescript": "4.0.2",
+    "typescript": "^3.0.3"
   },
   "dependencies": {
-    "antlr4": "^4.7.0",
-    "jquery": "^3.2.1",
-    "semantic-ui": "^2.3.0",
-    "vue": "^2.5.4"
+    "@types/antlr4": "^4.7.0",
+    "@types/jquery": "^3.3.6",
+    "@types/jsrender": "0.0.29",
+    "@types/semantic-ui": "^2.2.6",
+    "vue": "^2.5.17"
   }
 }
