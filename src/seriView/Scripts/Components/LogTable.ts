@@ -21,6 +21,10 @@ Vue.component("log-table", {
     },
 
     methods: {
+        firstPage: function () {
+            this.current_page = 1;
+            this.pageValueChanged();
+        },
         previousPage: function () {
             if (this.current_page > 1) {
                 this.current_page--;

@@ -15,7 +15,7 @@
     var predefinedFilterProperties = JSON.parse('@Html.Raw(Json.Serialize(Model))');
 </script>
 
-@Html.Partial("_Templates.cshtml")
+<partial name="_Templates.cshtml" />
 
 <script src="~/js/Components/LogTable.js"></script>
 <script src="~/js/Components/LogEntry.js"></script>
