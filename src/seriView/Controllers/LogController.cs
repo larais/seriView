@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 using SeriView.Models;
 using System;
 using System.Collections.Generic;
@@ -19,7 +18,7 @@ namespace SeriView.Controllers
         }
 
         [HttpGet]
-        public async Task<IList<LogEntry>> Get(string filter = null)
+        public async Task<IList<LogEntry>> Get(string filter = null, int page = 1, int pageSize = 50)
         {
             if (filter != null && !SQE.SQE.IsValidSyntax(filter))
             {
@@ -27,7 +26,7 @@ namespace SeriView.Controllers
             }
 
             var logLoader = new LogLoader(config["ConnectionStrings:LogServer"], config["LogTable"]);
-            var log = await logLoader.GetLogEntries(filter, 100);
+            var log = await logLoader.GetLogEntries(filter, page, pageSize);
             return log;
         }
     }

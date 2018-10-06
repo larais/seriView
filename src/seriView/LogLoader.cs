@@ -22,13 +22,13 @@ namespace SeriView
             }
         }
 
-        public async Task<IList<LogEntry>> GetLogEntries(string filter, int top)
+        public async Task<IList<LogEntry>> GetLogEntries(string filter, int page, int pageSize)
         {
-            List<LogEntry> entries = new List<LogEntry>(top);
+            List<LogEntry> entries = new List<LogEntry>(pageSize);
 
             filter = filter ?? string.Empty;
 
-            SqlCommand sqlCommand = SQE.SQE.GenerateCommand(new MSSQLGenerator(table), filter);
+            SqlCommand sqlCommand = SQE.SQE.GenerateCommand(new MSSQLGenerator(table, paginationWindowSize: pageSize, usePaging: true), filter, page);
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {

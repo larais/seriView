@@ -10,18 +10,36 @@ var app = new Vue({
         showModal: false,
         modalEntry: null,
         isLoadingLogs: false,
-        logdata: []
+        logdata: [],
+
+        filter: "",
+        page: 1,
+        pageSize: 50
     },
 
     methods: {
-        loadLogs(filter: string = null): void {
+        onApplyFilter(filter: string) {
+            this.filter = filter;
+            this.loadLogs();
+        },
+
+        onPageChange(pageData: number[]) {
+            console.log(JSON.stringify(pageData));
+            this.page = pageData[0];
+            this.pageSize = pageData[1];
+            this.loadLogs();
+        },
+
+        loadLogs(): void {
             this.isLoadingLogs = true;
 
-            console.debug("load logs with filter: " + filter);
+            console.debug("load logs with filter: " + this.filter);
 
             $.getJSON("/Log",
                 {
-                    filter: filter
+                    filter: this.filter,
+                    page: this.page,
+                    pageSize: this.pageSize
                 })
                 .done((response: LogEntry[]) => {
                     this.isErrorVisible = false;

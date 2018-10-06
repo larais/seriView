@@ -4,9 +4,9 @@
 }
 
 <div id="app">
-    <log-filter v-on:em_apply_filter="loadLogs"></log-filter>
+    <log-filter v-on:em_apply_filter="onApplyFilter"></log-filter>
     <div v-cloak v-if="isErrorVisible" class="ui error message" role="alert"><div class="header">Error</div><p>{{ errorMessage }}</p></div>
-    <log-table :pr_logdata="logdata" :pr_is_loading="isLoadingLogs"></log-table>
+    <log-table :pr_logdata="logdata" :pr_is_loading="isLoadingLogs" v-on:em_page_change="onPageChange"></log-table>
     <log-entry-modal></log-entry-modal>
 </div>
 
@@ -15,7 +15,7 @@
     var predefinedFilterProperties = JSON.parse('@Html.Raw(Json.Serialize(Model))');
 </script>
 
-@Html.Partial("_Templates.cshtml")
+<partial name="_Templates.cshtml" />
 
 <script src="~/js/Components/LogTable.js"></script>
 <script src="~/js/Components/LogEntry.js"></script>
