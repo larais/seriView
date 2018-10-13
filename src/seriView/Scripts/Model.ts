@@ -8,5 +8,17 @@
 
 interface LogProperty {
     key: string;
+}
+
+interface LogPropertySimple extends LogProperty {
     value: string;
+}
+
+interface LogPropertyComplex extends LogProperty {
+    type: string;
+    properties: LogProperty[];
+}
+
+interface LogProperties {
+    properties: LogProperty[];
 }

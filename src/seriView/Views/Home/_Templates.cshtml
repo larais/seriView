@@ -88,18 +88,32 @@
                     </tr>
                 </tbody>
             </table>
-            <h4 v-if="properties">Properties</h4>
-            <table v-if="properties" class="ui very basic collapsing celled table">
-                <tbody>
-                    <tr v-for="prop in properties">
-                        <td>{{ prop.key }}</td>
-                        <td><p>{{ prop.value }}</p></td>
-                    </tr>
-                </tbody>
-            </table>
+            <h4 v-if="properties.length > 0">Properties</h4>
+            <div class="ui list">
+                <log-entry-property-item v-for="(prop, index) in properties" :key="index" :pr_prop="prop"></log-entry-property-item>
+            </div>
         </div>
         <div class="actions">
             <div class="ui right button" v-on:click="hideModal">Close</div>
+        </div>
+    </div>
+</script>
+
+<script type="text/x-template" id="logEntryPropertyItemTmpl">
+    <div class="item">
+        <i v-if="!pr_prop.type" class="file icon"></i>
+        <i v-else class="folder icon"></i>
+        <div v-if="!pr_prop.type" class="content">
+            <div class="header">{{ pr_prop.key }}</div>
+            <div class="description">{{ pr_prop.value }}</div>
+        </div>
+
+        <div v-else class="content">
+            <div class="header">{{ pr_prop.key }}</div>
+            <div class="description"><i>[{{ pr_prop.type }}]</i></div>
+            <div class="list">
+                <log-entry-property-item v-for="(prop, index) in pr_prop.properties" :key="index" :pr_prop="prop"></log-entry-property-item>
+            </div>
         </div>
     </div>
 </script>
