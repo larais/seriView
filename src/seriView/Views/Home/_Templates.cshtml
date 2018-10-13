@@ -92,6 +92,11 @@
             <div class="ui list">
                 <log-entry-property-item v-for="(prop, index) in properties" :key="index" :pr_prop="prop"></log-entry-property-item>
             </div>
+
+            <h4 v-if="logEntry.exception">Exception</h4>
+            <div class="ui list">
+                <p style="color:red">{{ logEntry.exception }}</p>
+            </div>
         </div>
         <div class="actions">
             <div class="ui right button" v-on:click="hideModal">Close</div>

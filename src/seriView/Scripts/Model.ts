@@ -3,6 +3,7 @@
     message: string;
     level: string;
     timestamp: string;
+    exception: string;
     properties: string;
 }
 

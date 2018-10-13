@@ -44,6 +44,7 @@ namespace SeriView
                             Message = reader.GetString(1),
                             Level = reader.GetString(3),
                             Timestamp = reader.GetDateTime(4),
+                            Exception = reader.IsDBNull(5) ? null : reader.GetString(5),
                             Properties = reader.GetString(6)
                         });
                     }
