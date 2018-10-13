@@ -21,7 +21,7 @@ namespace SeriView
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddOptions();
-            services.Configure<LogViewerConfig>(Configuration);
+            services.AddSingleton(Configuration);
             services.AddMvc();
         }
 

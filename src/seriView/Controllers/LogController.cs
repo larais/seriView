@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Configuration;
 using SeriView.Models;
 using System;
 using System.Collections.Generic;
@@ -10,23 +10,23 @@ namespace SeriView.Controllers
     [Route("Log")]
     public class LogController : Controller
     {
-        private readonly LogViewerConfig config;
+        private readonly IConfiguration config;
 
-        public LogController(IOptions<LogViewerConfig> config)
+        public LogController(IConfiguration config)
         {
-            this.config = config.Value;
+            this.config = config;
         }
 
         [HttpGet]
-        public async Task<IList<LogEntry>> Get(string filter = "")
+        public async Task<IList<LogEntry>> Get(string filter = null, int page = 1, int pageSize = 50)
         {
-            if (!string.IsNullOrEmpty(filter) && !SQE.CSharp.SQE.IsValidSyntax(filter))
+            if (filter != null && !SQE.SQE.IsValidSyntax(filter))
             {
                 throw new Exception("Wrong syntax!");
             }
 
-            var logLoader = new LogLoader(config);
-            var log = await logLoader.GetLogEntries(filter ?? string.Empty, 100);
+            var logLoader = new LogLoader(config["ConnectionStrings:LogServer"], config["LogTable"]);
+            var log = await logLoader.GetLogEntries(filter, page, pageSize);
             return log;
         }
     }

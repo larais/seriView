@@ -1,0 +1,42 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "jquery@3.3.1",
+      "destination": "wwwroot/lib/jquery/",
+      "files": [
+        "jquery.min.js",
+        "jquery.js"
+      ]
+    },
+    {
+      "library": "vue@2.5.17",
+      "destination": "wwwroot/lib/vue/",
+      "files": [
+        "vue.min.js",
+        "vue.js"
+      ]
+    },
+    {
+      "library": "semantic-ui@2.3.3",
+      "destination": "wwwroot/lib/semantic-ui/",
+      "files": [
+        "semantic.min.js",
+        "semantic.min.css",
+        "semantic.js",
+        "semantic.css",
+        "themes/default/assets/fonts/icons.eot",
+        "themes/default/assets/fonts/icons.svg",
+        "themes/default/assets/fonts/icons.ttf",
+        "themes/default/assets/fonts/icons.woff",
+        "themes/default/assets/fonts/icons.woff2"
+      ]
+    },
+    {
+      "provider": "unpkg",
+      "library": "antlr4@4.7.1",
+      "destination": "wwwroot/antlr4/"
+    }
+  ]
+}

@@ -4,6 +4,19 @@
             <div class="ui loader"></div>
         </div>
 
+        <div class="ui grid">
+            <div class="five column row">
+                <div class="right floated column">
+                    <div class="ui labeled input page-size">
+                        <div class="ui label">
+                            Page size
+                        </div>
+                        <input placeholder="Page size" type="number" v-model.number="page_size">
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <table class="ui selectable striped table logTable segment">
             <thead>
                 <tr>
@@ -20,15 +33,15 @@
                 <tr>
                     <th colspan="4">
                         <div class="ui right floated pagination menu">
-                            <a class="icon item">
-                                <i class="left chevron icon"></i>
+                            <a class="icon item" v-show="current_page > 1" v-on:click="firstPage">
+                                <i class="angle double left icon"></i>
                             </a>
-                            <a class="item">1</a>
-                            <a class="item">2</a>
-                            <a class="item">3</a>
-                            <a class="item">4</a>
-                            <a class="icon item">
-                                <i class="right chevron icon"></i>
+                            <a class="icon item" v-bind:class="{ disabled: current_page <= 1}" v-on:click="previousPage">
+                                <i class="angle left icon"></i>
+                            </a>
+                            <a class="item">{{ current_page }}</a>
+                            <a class="icon item" v-bind:class="{ disabled: pr_logdata.length < page_size}" v-on:click="nextPage">
+                                <i class="angle right icon"></i>
                             </a>
                         </div>
                     </th>
@@ -75,18 +88,37 @@
                     </tr>
                 </tbody>
             </table>
-            <h4 v-if="properties">Properties</h4>
-            <table v-if="properties" class="ui very basic collapsing celled table">
-                <tbody>
-                    <tr v-for="prop in properties">
-                        <td>{{ prop.key }}</td>
-                        <td><p>{{ prop.value }}</p></td>
-                    </tr>
-                </tbody>
-            </table>
+            <h4 v-if="properties.length > 0">Properties</h4>
+            <div class="ui list">
+                <log-entry-property-item v-for="(prop, index) in properties" :key="index" :pr_prop="prop"></log-entry-property-item>
+            </div>
+
+            <h4 v-if="logEntry.exception">Exception</h4>
+            <div class="ui list">
+                <p style="color:red">{{ logEntry.exception }}</p>
+            </div>
         </div>
         <div class="actions">
             <div class="ui right button" v-on:click="hideModal">Close</div>
+        </div>
+    </div>
+</script>
+
+<script type="text/x-template" id="logEntryPropertyItemTmpl">
+    <div class="item">
+        <i v-if="!pr_prop.type" class="file icon"></i>
+        <i v-else class="folder icon"></i>
+        <div v-if="!pr_prop.type" class="content">
+            <div class="header">{{ pr_prop.key }}</div>
+            <div class="description">{{ pr_prop.value }}</div>
+        </div>
+
+        <div v-else class="content">
+            <div class="header">{{ pr_prop.key }}</div>
+            <div class="description"><i>[{{ pr_prop.type }}]</i></div>
+            <div class="list">
+                <log-entry-property-item v-for="(prop, index) in pr_prop.properties" :key="index" :pr_prop="prop"></log-entry-property-item>
+            </div>
         </div>
     </div>
 </script>

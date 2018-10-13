@@ -1,44 +1,38 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
     <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
     <UserSecretsId>1c92821d-21da-4260-b1c2-896cd835b036</UserSecretsId>
-    <TypeScriptToolsVersion>2.5</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="semantic\**" />
-    <Content Remove="semantic\**" />
-    <EmbeddedResource Remove="semantic\**" />
-    <None Remove="semantic\**" />
-  </ItemGroup>
 
   <ItemGroup>
     <None Remove="Scripts\AntlrErrorListener.ts" />
     <None Remove="Scripts\AntlrValidator.ts" />
     <None Remove="Scripts\Components\LogEntry.ts" />
     <None Remove="Scripts\Components\LogEntryModal.ts" />
+    <None Remove="Scripts\Components\LogEntryPropertyItemTemplate.ts" />
     <None Remove="Scripts\Components\LogFilter.ts" />
     <None Remove="Scripts\Components\LogTable.ts" />
     <None Remove="Scripts\Model.ts" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="2.0.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.0.1" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.1" />
-    <PackageReference Include="SQE.CSharp" Version="0.0.39-preview" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.5" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="2.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.5" />
+    <PackageReference Include="SQE.CSharp" Version="0.0.52-preview" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
-    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\AntlrErrorListener.ts" />
     <TypeScriptCompile Include="Scripts\AntlrValidator.ts" />
     <TypeScriptCompile Include="Scripts\Components\LogEntry.ts" />
     <TypeScriptCompile Include="Scripts\Components\LogEntryModal.ts" />
+    <TypeScriptCompile Include="Scripts\Components\LogEntryPropertyItemTemplate.ts" />
     <TypeScriptCompile Include="Scripts\Components\LogFilter.ts" />
     <TypeScriptCompile Include="Scripts\Components\LogTable.ts" />
     <TypeScriptCompile Include="Scripts\Model.ts" />

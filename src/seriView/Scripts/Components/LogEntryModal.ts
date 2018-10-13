@@ -1,5 +1,4 @@
-﻿import Vue from 'vue'
-import $ from "jquery"
+﻿import Vue from 'vue';
 declare var eventBus: Vue;
 
 Vue.component("log-entry-modal", {
@@ -16,16 +15,9 @@ Vue.component("log-entry-modal", {
             console.log("show modal");
             this.logEntry = logEntry;
 
-            var properties: LogProperty[] = [];
+            let propRoot: LogPropertyComplex = this.parseComplexProperty(<LogPropertyComplex>{ key: "Root", type: "root", properties: [] }, $(logEntry.properties).children("property"));
 
-            $(logEntry.properties).find("property").each(function (i, item) {
-                properties.push({
-                    key: $(item).attr("key"),
-                    value: $(item).text()
-                });
-            });
-
-            this.properties = properties;
+            this.properties = propRoot.properties;
 
             $(".entryModal").modal("show");
         },
@@ -34,6 +26,31 @@ Vue.component("log-entry-modal", {
             console.log("hide modal");
             $(".entryModal").modal("hide");
             this.logEntry = null;
+        },
+
+        parseComplexProperty: function (parentProp: LogPropertyComplex, props: JQuery<HTMLElement>): LogPropertyComplex {
+            props.each((index, item) => {
+                let property = $(item);
+                let structure = property.children("structure");
+
+                if (structure.length > 0) {
+                    let newProp: LogPropertyComplex = {
+                        key: property.attr("key"),
+                        type: structure.first().attr("type"),
+                        properties: []
+                    };
+
+                    parentProp.properties.push(this.parseComplexProperty(newProp, structure.children("property")));
+
+                } else {
+                    parentProp.properties.push(<LogPropertySimple>{
+                        key: property.attr("key"),
+                        value: property.text()
+                    });
+                }
+            });
+
+            return parentProp;
         }
     },
 

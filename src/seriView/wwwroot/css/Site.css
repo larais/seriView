@@ -1,0 +1,50 @@
+.body-main {
+  min-height: 100%;
+  padding-bottom: 50px;
+  box-sizing: border-box;
+}
+
+.body-content {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.body-footer {
+  position: absolute;
+  margin-top: -48px;
+  left: 0;
+  width: 100%;
+}
+
+.menu {
+  border-radius: 0 !important;
+}
+
+#filterColumn {
+  position: fixed;
+  right: 0;
+}
+
+#filters {
+  display: none;
+}
+
+.logTable {
+  font-size: 0.9em;
+}
+
+.logTable td, .logTable th {
+  padding: 0.3em !important;
+}
+
+tr {
+  cursor: pointer;
+}
+
+[v-cloak] {
+  display: none;
+}
+
+.page-size {
+  width: 100%;
+}

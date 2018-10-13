@@ -2,40 +2,35 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
-using SeriView.Utils;
 using System;
-using SQE.CSharp.SQLGenerators;
+using SQE.SQLGenerators;
 
 namespace SeriView
 {
     public class LogLoader
     {
-        private readonly LogViewerConfig config;
+        private readonly string connectionString;
+        private readonly string table;
 
-        public LogLoader(LogViewerConfig config)
+        public LogLoader(string connectionString, string table)
         {
-            this.config = config;
-            if (string.IsNullOrEmpty(this.config.ConnectionString))
+            this.connectionString = connectionString;
+            this.table = table;
+            if (string.IsNullOrEmpty(this.connectionString))
             {
                 throw new InvalidOperationException("ConnectionString is empty. Please check your configuration.") { Source = "Log loader" };
             }
         }
 
-        public async Task<IList<LogEntry>> GetLogEntries(string filter, int top)
+        public async Task<IList<LogEntry>> GetLogEntries(string filter, int page, int pageSize)
         {
-            List<LogEntry> entries = new List<LogEntry>(top);
+            List<LogEntry> entries = new List<LogEntry>(pageSize);
 
-            SqlCommand sqlCommand;
-            //if (filter != null)
-            //{
-                sqlCommand = SQE.CSharp.SQE.GenerateCommand(new MSSQLGenerator(config.LogTable), filter);
-            //}
-            //else
-            //{
-            //    sqlCommand = new SqlCommand($"SELECT TOP {top} * FROM {config.LogTable} ORDER BY TimeStamp DESC");
-            //}
+            filter = filter ?? string.Empty;
 
-            using (SqlConnection connection = new SqlConnection(config.ConnectionString))
+            SqlCommand sqlCommand = SQE.SQE.GenerateCommand(new MSSQLGenerator(table, paginationWindowSize: pageSize, usePaging: true), filter, page);
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 await connection.OpenAsync();
                 sqlCommand.Connection = connection;
@@ -49,6 +44,7 @@ namespace SeriView
                             Message = reader.GetString(1),
                             Level = reader.GetString(3),
                             Timestamp = reader.GetDateTime(4),
+                            Exception = reader.IsDBNull(5) ? null : reader.GetString(5),
                             Properties = reader.GetString(6)
                         });
                     }
