@@ -46,5 +46,5 @@ tr {
 }
 
 .page-size {
-  width: 100%;
+  max-width: 70px !important;
 }

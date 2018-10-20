@@ -37,6 +37,22 @@
       "provider": "unpkg",
       "library": "antlr4@4.7.1",
       "destination": "wwwroot/antlr4/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "daterangepicker@3.0.3",
+      "destination": "wwwroot/lib/daterangepicker/",
+      "files": [
+        "daterangepicker.js",
+        "daterangepicker.css"
+      ]
+    },
+    {
+      "library": "moment.js@2.22.2",
+      "destination": "wwwroot/lib/moment.js/",
+      "files": [
+        "moment-with-locales.min.js"
+      ]
     }
   ]
 }

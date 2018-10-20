@@ -124,30 +124,61 @@
 </script>
 
 <script type="text/x-template" id="logFilterTmpl">
-    <div class="ui form">
-        <div class="field" v-bind:class="{ error: !is_valid && filter.length > 0 }">
-            <label>Query</label>
-            <textarea v-model="filter"></textarea>
+    <div class="ui grid">
+        <div class="row">
+            <div class="ui form">
+                <div class="field" v-bind:class="{ error: !is_valid && filter.length > 0 }">
+                    <label>Query</label>
+                    <textarea v-model="filter" rows="2"></textarea>
+                </div>
+            </div>
         </div>
-
-        <div class="fields">
-            <div class="field">
-                <label>&nbsp;</label>
-                <div class="ui submit button" v-on:click="evClickApply" v-bind:class="{ disabled: !is_valid }">Apply</div>
+        <div class="row">
+            <div class="twelve wide column">
+                <div class="ui form">
+                    <div class="fields">
+                        <div class="field">
+                            <div class="ui submit button" v-on:click="evClickApply" v-bind:class="{ disabled: !is_valid }">Apply</div>
+                        </div>
+                        <div class="field">
+                            <div class="ui labeled input">
+                                <div class="ui label">
+                                    Time
+                                </div>
+                                
+                            <input type="text" name="timepicker"
+                                   id="timepicker"
+                                   value="03/18/2013 - 03/23/2013" />
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui floating dropdown labeled input">
+                                <div class="ui label">
+                                    Level
+                                </div>
+                                <!-- Use complex values with colored lables https://semantic-ui.com/modules/dropdown.html#multiple-search-selection siehe auch "Search In-Menu"-Punkt -->
+                                <select name="loglevels" multiple="" class="ui fluid dropdown">
+                                    <option value="verbose">Verbose</option>
+                                    <option value="debug">Debug</option>
+                                    <option value="information">Information</option>
+                                    <option value="Warning">Warning</option>
+                                    <option value="Fatal">Fatal</option>
+                                    <option value="Error">Error</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="field">
-                <label>Time frame</label>
-                <input type="text" name="timepicker"
-                       id="timepicker"
-                       value="03/18/2013 - 03/23/2013" />
-            </div>
-            <div class="field">
-                <label>Restrict Log level</label>
-                <select name="loglevels" multiple="" class="ui fluid dropdown">
-                    <option value="verbose">Verbose</option>
-                    <option value="debug">Debug</option>
-                    <option value="information">Information</option>
-                </select>
+            <div class="right aligned four wide column">
+                <div>
+                    <div class="ui labeled input">
+                        <div class="ui label">
+                            Page size
+                        </div>
+                        <input class="page-size" type="number" v-model.number="page_size">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
