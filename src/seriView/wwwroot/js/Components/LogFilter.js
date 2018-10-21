@@ -23,6 +23,32 @@ Vue.component("log-filter", {
                 this.$emit("em_apply_filter", this.filter);
             }
         }
+    },
+    mounted: function () {
+        $('#timepicker').daterangepicker({
+            buttonClasses: ["small ui button"],
+            applyButtonClasses: "primary",
+            cancelButtonClasses: "",
+            autoUpdateInput: false,
+            locale: {
+                cancelLabel: 'Clear'
+            },
+            ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            }
+        });
+        $("#timepicker").on('apply.daterangepicker', function (ev, picker) {
+            $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+        });
+        $("#timepicker").on('cancel.daterangepicker', function (ev, picker) {
+            $(this).val('');
+        });
+        $(".ui.fluid.dropdown").dropdown();
     }
 });
 

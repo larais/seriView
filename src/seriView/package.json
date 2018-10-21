@@ -16,9 +16,11 @@
   },
   "dependencies": {
     "@types/antlr4": "^4.7.0",
+    "@types/daterangepicker": "^3.0.0",
     "@types/jquery": "^3.3.6",
     "@types/jsrender": "0.0.29",
     "@types/semantic-ui": "^2.2.6",
+    "moment": "^2.22.2",
     "vue": "^2.5.17"
   }
 }
