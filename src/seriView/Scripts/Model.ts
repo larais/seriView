@@ -23,3 +23,10 @@ interface LogPropertyComplex extends LogProperty {
 interface LogProperties {
     properties: LogProperty[];
 }
+
+interface LogFilter {
+    query: string;
+    startDate: any;
+    endDate: any;
+    levels: string[];
+}

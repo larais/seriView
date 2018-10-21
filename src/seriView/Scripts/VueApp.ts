@@ -12,13 +12,14 @@ var app = new Vue({
         isLoadingLogs: false,
         logdata: [],
 
-        filter: "",
+        filter: {},
         page: 1,
         pageSize: 50
     },
 
     methods: {
-        onApplyFilter(filter: string) {
+        onApplyFilter(filter: LogFilter) {
+            console.log(filter);
             this.filter = filter;
             this.loadLogs();
         },
@@ -38,9 +39,32 @@ var app = new Vue({
 
             console.debug("load logs with filter: " + this.filter);
 
+            if (this.filter.levels != null && this.filter.levels.length > 0) {
+                let q = "";
+                if (this.filter.query != null && this.filter.query.length > 0) {
+                    q = "(" + this.filter.query + ") and (";
+                } else {
+                    q = "(";
+                }
+
+                for (var i = 0; i < this.filter.levels.length; i++) {
+                    if (i == 0) {
+                        q += "Level = \"" + this.filter.levels[i] + "\"";
+                    } else {
+                        q += " or Level = \"" + this.filter.levels[i] + "\"";
+                    }
+                }
+
+                q += ")";
+
+                this.filter.query = q;
+            }
+
             $.getJSON("/Log",
                 {
-                    filter: this.filter,
+                    query: this.filter.query,
+                    startDate: this.filter.startDate != null ? this.filter.startDate.format() : null,
+                    endDate: this.filter.endDate != null ? this.filter.endDate.format() : null,
                     page: this.page,
                     pageSize: this.pageSize
                 })

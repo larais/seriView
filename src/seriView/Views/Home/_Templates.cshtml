@@ -136,11 +136,11 @@
                         </div>
                         <div id="loglevel-dropdown" class="field">
                             <label>Log level</label>
-                            <select name="loglevels" multiple="" class="ui fluid dropdown ">
+                            <select name="loglevels" v-model="levelFilter" multiple="" class="ui fluid dropdown ">
                                 <option value="">All</option>
-                                <option value="verbose">Verbose</option>
-                                <option value="debug">Debug</option>
-                                <option value="information">Information</option>
+                                <option value="Verbose">Verbose</option>
+                                <option value="Debug">Debug</option>
+                                <option value="Information">Information</option>
                                 <option value="Warning">Warning</option>
                                 <option value="Fatal">Fatal</option>
                                 <option value="Error">Error</option>

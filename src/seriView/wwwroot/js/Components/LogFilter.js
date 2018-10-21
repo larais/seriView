@@ -5,7 +5,10 @@ Vue.component("log-filter", {
         return {
             filter: "",
             is_valid: false,
-            page_size: 50
+            page_size: 50,
+            startDate: null,
+            endDate: null,
+            levelFilter: []
         };
     },
     watch: {
@@ -13,19 +16,25 @@ Vue.component("log-filter", {
             this.is_valid = antlrValidator.isValid(this.filter);
         },
         page_size: function (newSize) {
-            console.log("emit size: " + newSize + " and " + this.page_size);
             eventBus.$emit("evPageSizeChanged", this.page_size);
         }
     },
     methods: {
         evClickApply: function () {
             if (this.is_valid) {
-                this.$emit("em_apply_filter", this.filter);
+                this.$emit("em_apply_filter", {
+                    query: this.filter,
+                    startDate: this.startDate,
+                    endDate: this.endDate,
+                    levels: this.levelFilter
+                });
             }
         }
     },
     mounted: function () {
+        var _this = this;
         $('#timepicker').daterangepicker({
+            timePicker: true,
             buttonClasses: ["small ui button"],
             applyButtonClasses: "primary",
             cancelButtonClasses: "",
@@ -43,10 +52,14 @@ Vue.component("log-filter", {
             }
         });
         $("#timepicker").on('apply.daterangepicker', function (ev, picker) {
-            $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+            $("#timepicker").val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+            _this.startDate = picker.startDate;
+            _this.endDate = picker.endDate;
         });
         $("#timepicker").on('cancel.daterangepicker', function (ev, picker) {
-            $(this).val('');
+            $("#timepicker").val('');
+            _this.startDate = null;
+            _this.endDate = null;
         });
         $(".ui.fluid.dropdown").dropdown();
     }
