@@ -1,4 +1,5 @@
 ﻿import Vue, { PropOptions } from 'vue'
+declare var eventBus: Vue;
 
 Vue.component("log-table", {
     template: "#logTableTmpl",
@@ -12,12 +13,6 @@ Vue.component("log-table", {
     props: {
         pr_logdata: { type: Array, required: true } as PropOptions<LogEntry[]>,
         pr_is_loading: { type: Boolean } as PropOptions<Boolean>
-    },
-
-    watch: {
-        page_size: function (newSize) {
-            this.pageValueChanged();
-        }
     },
 
     methods: {
@@ -38,7 +33,16 @@ Vue.component("log-table", {
             }
         },
         pageValueChanged: function () {
-            this.$emit("em_page_change", [this.current_page, this.page_size]);
+            this.$emit("em_page_change", this.current_page);
+        },
+
+        handlePageSizeChanged: function (newSize) {
+            console.log("Size change: " + newSize);
+            this.page_size = newSize;
         }
+    },
+
+    mounted: function () {
+        eventBus.$on("evPageSizeChanged", this.handlePageSizeChanged);
     }
 });

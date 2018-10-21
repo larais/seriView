@@ -10,11 +10,6 @@ Vue.component("log-table", {
         pr_logdata: { type: Array, required: true },
         pr_is_loading: { type: Boolean }
     },
-    watch: {
-        page_size: function (newSize) {
-            this.pageValueChanged();
-        }
-    },
     methods: {
         firstPage: function () {
             this.current_page = 1;
@@ -33,8 +28,15 @@ Vue.component("log-table", {
             }
         },
         pageValueChanged: function () {
-            this.$emit("em_page_change", [this.current_page, this.page_size]);
+            this.$emit("em_page_change", this.current_page);
+        },
+        handlePageSizeChanged: function (newSize) {
+            console.log("Size change: " + newSize);
+            this.page_size = newSize;
         }
+    },
+    mounted: function () {
+        eventBus.$on("evPageSizeChanged", this.handlePageSizeChanged);
     }
 });
 

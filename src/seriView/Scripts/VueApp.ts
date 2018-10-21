@@ -23,10 +23,13 @@ var app = new Vue({
             this.loadLogs();
         },
 
-        onPageChange(pageData: number[]) {
-            console.log(JSON.stringify(pageData));
-            this.page = pageData[0];
-            this.pageSize = pageData[1];
+        onPageNumberChange(pageNumber: number) {
+            this.page = pageNumber;
+            this.loadLogs();
+        },
+
+        handlePageSizeChanged(newSize: number) {
+            this.pageSize = newSize;
             this.loadLogs();
         },
 
@@ -58,6 +61,8 @@ var app = new Vue({
     },
 
     mounted() {
+        eventBus.$on("evPageSizeChanged", this.handlePageSizeChanged);
+
         this.loadLogs();
     }
 });

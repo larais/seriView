@@ -4,19 +4,6 @@
             <div class="ui loader"></div>
         </div>
 
-        <div class="ui grid">
-            <div class="five column row">
-                <div class="right floated column">
-                    <div class="ui labeled input page-size">
-                        <div class="ui label">
-                            Page size
-                        </div>
-                        <input placeholder="Page size" type="number" v-model.number="page_size">
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <table class="ui selectable striped table logTable segment">
             <thead>
                 <tr>
@@ -126,7 +113,7 @@
 <script type="text/x-template" id="logFilterTmpl">
     <div class="ui grid">
         <div class="row">
-            <div class="ui form">
+            <div class="column ui form">
                 <div class="field" v-bind:class="{ error: !is_valid && filter.length > 0 }">
                     <label>Query</label>
                     <textarea v-model="filter" rows="2"></textarea>
@@ -138,40 +125,32 @@
                 <div class="ui form">
                     <div class="fields">
                         <div class="field">
+                            <label>&nbsp;</label>
                             <div class="ui submit button" v-on:click="evClickApply" v-bind:class="{ disabled: !is_valid }">Apply</div>
                         </div>
                         <div class="field">
-                            <div class="ui labeled input">
-                                <div class="ui label">
-                                    Time
-                                </div>
-                                
+                            <label>Time range</label>
                             <input type="text" name="timepicker"
                                    id="timepicker"
                                    value="03/18/2013 - 03/23/2013" />
-                            </div>
                         </div>
-                        <div class="field">
-                            <div class="ui floating dropdown labeled input">
-                                <div class="ui label">
-                                    Level
-                                </div>
-                                <!-- Use complex values with colored lables https://semantic-ui.com/modules/dropdown.html#multiple-search-selection siehe auch "Search In-Menu"-Punkt -->
-                                <select name="loglevels" multiple="" class="ui fluid dropdown">
-                                    <option value="verbose">Verbose</option>
-                                    <option value="debug">Debug</option>
-                                    <option value="information">Information</option>
-                                    <option value="Warning">Warning</option>
-                                    <option value="Fatal">Fatal</option>
-                                    <option value="Error">Error</option>
-                                </select>
-                            </div>
+                        <div id="loglevel-dropdown" class="field">
+                            <label>Log level</label>
+                            <select name="loglevels" multiple="" class="ui fluid dropdown ">
+                                <option value="">All</option>
+                                <option value="verbose">Verbose</option>
+                                <option value="debug">Debug</option>
+                                <option value="information">Information</option>
+                                <option value="Warning">Warning</option>
+                                <option value="Fatal">Fatal</option>
+                                <option value="Error">Error</option>
+                            </select>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="right aligned four wide column">
-                <div>
+                <div style="margin-top: 23px">
                     <div class="ui labeled input">
                         <div class="ui label">
                             Page size
