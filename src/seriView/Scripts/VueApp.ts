@@ -19,7 +19,6 @@ var app = new Vue({
 
     methods: {
         onApplyFilter(filter: LogFilter) {
-            console.log(filter);
             this.filter = filter;
             this.loadLogs();
         },
@@ -39,6 +38,7 @@ var app = new Vue({
 
             console.debug("load logs with filter: " + this.filter);
 
+            // add level filter
             if (this.filter.levels != null && this.filter.levels.length > 0) {
                 let q = "";
                 if (this.filter.query != null && this.filter.query.length > 0) {
@@ -58,6 +58,17 @@ var app = new Vue({
                 q += ")";
 
                 this.filter.query = q;
+            }
+
+            // add time filter
+            if (this.filter.startDate != null) {
+                let qTime = "(TimeStamp > \"" + this.filter.startDate.format() + "\" and TimeStamp < \"" + this.filter.startDate.format() + "\")";
+
+                if (this.filter.query != null && this.filter.query.length > 0) {
+                    this.filter.query = "(" + this.filter.query + ") and ";
+                }
+
+                this.filter.query += qTime;
             }
 
             $.getJSON("/Log",
