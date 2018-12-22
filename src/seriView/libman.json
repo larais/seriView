@@ -11,7 +11,7 @@
       ]
     },
     {
-      "library": "vue@2.5.17",
+      "library": "vue@2.5.21",
       "destination": "wwwroot/lib/vue/",
       "files": [
         "vue.min.js",
@@ -19,7 +19,7 @@
       ]
     },
     {
-      "library": "semantic-ui@2.3.3",
+      "library": "semantic-ui@2.4.1",
       "destination": "wwwroot/lib/semantic-ui/",
       "files": [
         "semantic.min.js",
@@ -35,7 +35,7 @@
     },
     {
       "provider": "unpkg",
-      "library": "antlr4@4.7.1",
+      "library": "antlr4@4.7.2",
       "destination": "wwwroot/antlr4/"
     },
     {
