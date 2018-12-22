@@ -3,22 +3,23 @@
   "name": "asp.net",
   "private": true,
   "devDependencies": {
-    "graceful-fs": "4.1.11",
+    "graceful-fs": "4.1.15",
     "gulp": "^4.0.0",
-    "gulp-plumber": "1.2.0",
+    "gulp-plumber": "1.2.1",
     "gulp-rename": "1.4.0",
     "gulp-rimraf": "0.2.2",
     "gulp-rm-lines": "0.0.9",
-    "gulp-sass": "4.0.1",
+    "gulp-sass": "4.0.2",
     "gulp-sourcemaps": "^2.6.4",
-    "gulp-typescript": "4.0.2",
-    "typescript": "^3.0.3"
+    "gulp-typescript": "5.0.0",
+    "typescript": "^3.2.2"
   },
   "dependencies": {
     "@types/antlr4": "^4.7.0",
-    "@types/jquery": "^3.3.6",
+    "@types/jquery": "^3.3.28",
     "@types/jsrender": "0.0.29",
     "@types/semantic-ui": "^2.2.6",
-    "vue": "^2.5.17"
+    "@types/semantic-ui-form": "^2.2.5",
+    "vue": "^2.5.21"
   }
 }
