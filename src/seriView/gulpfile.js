@@ -74,11 +74,11 @@ gulp.task("compile-sass:release", function () {
 });
 
 gulp.task("watch:ts", function () {
-    gulp.watch([paths.ts], ["compile-ts:dev"]);
+    gulp.watch([paths.ts], gulp.series("compile-ts:dev"));
 });
 
 gulp.task("watch:sass", function () {
-    gulp.watch([paths.scss], ["compile-sass:dev"]);
+    gulp.watch([paths.scss], gulp.series("compile-sass:dev"));
 });
 
 gulp.task('watch', gulp.parallel(['watch:ts', 'watch:sass']));
