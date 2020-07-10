@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
     <UserSecretsId>1c92821d-21da-4260-b1c2-896cd835b036</UserSecretsId>
-    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>3.9</TypeScriptToolsVersion>
   </PropertyGroup>
 
   <ItemGroup>

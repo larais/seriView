@@ -6,7 +6,7 @@ var AntlrErrorListener = /** @class */ (function () {
         get: function () {
             return this.errors.length > 0;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     AntlrErrorListener.prototype.reset = function () {
